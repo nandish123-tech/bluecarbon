@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReLeaf - Blue Carbon Registry</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Lucide Icons Script -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom gradient classes and animations */
+        .bg-gradient-green-blue { background-image: linear-gradient(to right, #4ade80, #3b82f6); }
+        .bg-gradient-purple-pink { background-image: linear-gradient(to right, #a78bfa, #ec4899); }
+        .bg-gradient-yellow-orange { background-image: linear-gradient(to right, #facc15, #f97316); }
+        .bg-gradient-page { background-image: linear-gradient(to bottom right, #eff6ff, #f0fdf4); }
+        .bg-gradient-red-orange { background-image: linear-gradient(to bottom right, #fef2f2, #fff7ed); }
+        .bg-gradient-blue-green { background-image: linear-gradient(to right, #3b82f6, #10b981); }
+        .bg-gradient-green-blue-alt { background-image: linear-gradient(to right, #10b981, #3b82f6); }
+        
+        .view { display: none; }
+        .view.active { display: block; }
+        .chat-hidden { display: none; }
+        .chat-visible { display: block; }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        .text-risk-low { color: #059669; }
+        .text-risk-medium { color: #d97706; }
+        .text-risk-high { color: #dc2626; }
+        .bg-risk-low { background-color: #d1fae5; }
+        .bg-risk-medium { background-color: #fef3c7; }
+        .bg-risk-high { background-color: #fee2e2; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- Home View -->
+<div id="home-view" class="view active">
+    <div class="p-6 max-w-md mx-auto bg-gradient-page min-h-screen">
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-blue-800">ReLeaf</h1>
+                    <p class="text-sm text-gray-600">Blue Carbon Registry</p>
+                </div>
+                <div class="bg-blue-100 p-3 rounded-full">
+                    <i data-lucide="leaf" class="w-6 h-6 text-blue-600"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <div class="bg-gradient-green-blue p-4 rounded-xl text-white text-center">
+                    <i data-lucide="trending-up" class="w-6 h-6 mx-auto mb-2"></i>
+                    <p class="text-xs">Total Credits</p>
+                    <p class="text-lg font-bold">150</p>
+                </div>
+                <div class="bg-gradient-purple-pink p-4 rounded-xl text-white text-center">
+                    <i data-lucide="globe" class="w-6 h-6 mx-auto mb-2"></i>
+                    <p class="text-xs">Active Sites</p>
+                    <p class="text-lg font-bold">3</p>
+                </div>
+                <div class="bg-gradient-yellow-orange p-4 rounded-xl text-white text-center">
+                    <i data-lucide="wallet" class="w-6 h-6 mx-auto mb-2"></i>
+                    <p class="text-xs">ROI</p>
+                    <p class="text-lg font-bold">12%</p>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <div class="p-3 rounded-lg bg-green-100 border-l-4 border-green-500">
+                    <p class="text-sm">Site #A127 mangrove growth verified +25 credits</p>
+                </div>
+                <div class="p-3 rounded-lg bg-yellow-100 border-l-4 border-yellow-500">
+                    <p class="text-sm">Cyclone alert for Region B - Credits auto-transferred</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="showView('projects')" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover-scale">
+                <i data-lucide="map-pin" class="w-8 h-8 text-blue-600 mx-auto mb-3"></i>
+                <p class="text-sm font-semibold text-center">Choose Sites</p>
+            </button>
+            <button onclick="showView('qr-tracker')" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover-scale">
+                <i data-lucide="qr-code" class="w-8 h-8 text-green-600 mx-auto mb-3"></i>
+                <p class="text-sm font-semibold text-center">Track Progress</p>
+            </button>
+            <button onclick="showView('upload')" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover-scale">
+                <i data-lucide="upload" class="w-8 h-8 text-purple-600 mx-auto mb-3"></i>
+                <p class="text-sm font-semibold text-center">Upload Data</p>
+            </button>
+            <button onclick="showView('admin')" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover-scale">
+                <i data-lucide="shield" class="w-8 h-8 text-red-600 mx-auto mb-3"></i>
+                <p class="text-sm font-semibold text-center">NCCR Admin</p>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Projects View -->
+<div id="projects-view" class="view">
+    <div class="p-6 max-w-md mx-auto bg-gradient-page min-h-screen">
+        <div class="flex items-center justify-between mb-6">
+            <button onclick="showView('home')" class="p-2 rounded-full bg-white shadow-md">←</button>
+            <h2 class="text-xl font-bold text-blue-800">Choose Your Site</h2>
+            <div class="w-10"></div>
+        </div>
+        
+        <div class="mb-4 p-4 bg-blue-100 rounded-xl">
+            <p class="text-sm text-blue-800">💡 <strong>Smart Recommendation:</strong> Sites with risk score ≤2 are recommended for long-term investments</p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Project 1: Sundarbans -->
+            <div class="bg-white rounded-2xl shadow-lg p-5 border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-1">Sundarbans Mangrove Restoration</h3>
+                        <p class="text-sm text-gray-600 flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
+                            West Bengal Coast
+                        </p>
+                    </div>
+                    <div class="px-3 py-1 rounded-full text-xs font-medium bg-risk-low text-risk-low">
+                        Risk: 2/5
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Progress</p>
+                        <p class="font-bold text-green-600">78%</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Credits</p>
+                        <p class="font-bold text-blue-600">45</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Ecosystem</p>
+                        <p class="font-bold text-purple-600">Mangrove</p>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-1">
+                        <span class="text-2xl">🌱</span>
+                        <span class="text-2xl">🌿</span>
+                        <span class="text-2xl">🌳</span>
+                    </div>
+                    <button onclick="showProjectDetail('A127')" class="bg-gradient-blue-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-300">
+                        Invest Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Project 2: Seagrass -->
+            <div class="bg-white rounded-2xl shadow-lg p-5 border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-1">Seagrass Meadow Conservation</h3>
+                        <p class="text-sm text-gray-600 flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
+                            Tamil Nadu Coast
+                        </p>
+                    </div>
+                    <div class="px-3 py-1 rounded-full text-xs font-medium bg-risk-low text-risk-low">
+                        Risk: 1/5
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Progress</p>
+                        <p class="font-bold text-green-600">92%</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Credits</p>
+                        <p class="font-bold text-blue-600">67</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Ecosystem</p>
+                        <p class="font-bold text-purple-600">Seagrass</p>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-1">
+                        <span class="text-2xl">🌾</span>
+                        <span class="text-2xl">🐟</span>
+                        <span class="text-2xl">🌊</span>
+                    </div>
+                    <button onclick="showProjectDetail('B203')" class="bg-gradient-blue-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-300">
+                        Invest Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Project 3: Wetland -->
+            <div class="bg-white rounded-2xl shadow-lg p-5 border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-1">Coastal Wetland Revival</h3>
+                        <p class="text-sm text-gray-600 flex items-center">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
+                            Gujarat Coast
+                        </p>
+                    </div>
+                    <div class="px-3 py-1 rounded-full text-xs font-medium bg-risk-high text-risk-high">
+                        Risk: 4/5
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Progress</p>
+                        <p class="font-bold text-green-600">34%</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Credits</p>
+                        <p class="font-bold text-blue-600">23</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">Ecosystem</p>
+                        <p class="font-bold text-purple-600">Salt Marsh</p>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-1">
+                        <span class="text-2xl">🌱</span>
+                        <span class="text-2xl">🦆</span>
+                        <span class="text-2xl">💧</span>
+                    </div>
+                    <button onclick="showProjectDetail('C089')" class="bg-gradient-blue-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-300">
+                        Invest Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Project Detail View -->
+<div id="project-detail-view" class="view">
+    <div class="p-6 max-w-md mx-auto bg-gradient-page min-h-screen">
+        <div class="flex items-center justify-between mb-6">
+            <button onclick="showView('projects')" class="p-2 rounded-full bg-white shadow-md">←</button>
+            <h2 class="text-lg font-bold text-blue-800">Site Details</h2>
+            <i data-lucide="qr-code" class="w-6 h-6 text-gray-600"></i>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6" id="project-detail-content">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<!-- QR Tracker View -->
+<div id="qr-tracker-view" class="view">
+    <div class="p-6 max-w-md mx-auto bg-gradient-page min-h-screen">
+        <div class="flex items-center justify-between mb-6">
+            <button onclick="showView('home')" class="p-2 rounded-full bg-white shadow-md">←</button>
+            <h2 class="text-xl font-bold text-blue-800">Track Progress</h2>
+            <div class="w-10"></div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6 text-center">
+            <div class="w-40 h-40 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-green-100 rounded-2xl flex items-center justify-center border-4 border-dashed border-gray-300">
+                <div class="text-6xl">📱</div>
+            </div>
+            <h3 class="text-lg font-bold mb-2">Scan Your QR Code</h3>
+            <p class="text-gray-600 text-sm mb-4">Point your camera at the QR code to track your restoration site in real-time</p>
+            <button class="bg-gradient-blue-green text-white px-6 py-3 rounded-lg font-medium">
+                <i data-lucide="camera" class="w-5 h-5 inline mr-2"></i>
+                Open Camera
+            </button>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h4 class="font-bold text-gray-800 mb-4">Your Active Investments</h4>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                        <p class="font-medium text-sm">Sundarbans Mangrove Restoration</p>
+                        <p class="text-xs text-gray-500">Site ID: A127</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm font-bold text-green-600">78%</p>
+                        <button class="text-xs text-blue-600 hover:underline">View QR</button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                        <p class="font-medium text-sm">Seagrass Meadow Conservation</p>
+                        <p class="text-xs text-gray-500">Site ID: B203</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm font-bold text-green-600">92%</p>
+                        <button class="text-xs text-blue-600 hover:underline">View QR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload View -->
+<div id="upload-view" class="view">
+    <div class="p-6 max-w-md mx-auto bg-gradient-page min-h-screen">
+        <div class="flex items-center justify-between mb-6">
+            <button onclick="showView('home')" class="p-2 rounded-full bg-white shadow-md">←</button>
+            <h2 class="text-xl font-bold text-blue-800">Upload Field Data</h2>
+            <div class="w-10"></div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <div class="text-center mb-6">
+                <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center">
+                    <i data-lucide="upload" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Community Data Upload</h3>
+                <p class="text-gray-600 text-sm">Help verify restoration progress by uploading geo-tagged photos and measurements</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Project Site</label>
+                    <select class="w-full p-3 border border-gray-300 rounded-lg">
+                        <option>Select your project site...</option>
+                        <option value="A127">Sundarbans Mangrove Restoration (ID: A127)</option>
+                        <option value="B203">Seagrass Meadow Conservation (ID: B203)</option>
+                        <option value="C089">Coastal Wetland Revival (ID: C089)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Upload Photos</label>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                        <i data-lucide="camera" class="w-8 h-8 text-gray-400 mx-auto mb-2"></i>
+                        <p class="text-sm text-gray-600">Take geo-tagged photos</p>
+                        <button class="mt-2 text-blue-600 text-sm hover:underline">Open Camera</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Growth Measurements</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" placeholder="Height (cm)" class="p-3 border border-gray-300 rounded-lg">
+                        <input type="text" placeholder="Width (cm)" class="p-3 border border-gray-300 rounded-lg">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
+                    <textarea placeholder="Describe current condition, wildlife spotted, weather conditions..." class="w-full p-3 border border-gray-300 rounded-lg h-20 resize-none"></textarea>
+                </div>
+
+                <button class="w-full bg-gradient-green-blue-alt text-white py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300">
+                    📤 Submit for Blockchain Verification
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Admin View -->
+<div id="admin-view" class="view">
+    <div class="p-6 max-w-md mx-auto bg-gradient-red-orange min-h-screen">
+        <div class="flex items-center justify-between mb-6">
+            <button onclick="showView('home')" class="p-2 rounded-full bg-white shadow-md">←</button>
+            <h2 class="text-xl font-bold text-red-800">NCCR Admin Panel</h2>
+            <i data-lucide="shield" class="w-6 h-6 text-red-600"></i>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-xl shadow-lg text-center">
+                <i data-lucide="check-circle" class="w-8 h-8 text-green-600 mx-auto mb-2"></i>
+                <p class="text-2xl font-bold text-green-600">47</p>
+                <p class="text-xs text-gray-600">Verified Sites</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-lg text-center">
+                <i data-lucide="alert-triangle" class="w-8 h-8 text-yellow-600 mx-auto mb-2"></i>
+                <p class="text-2xl font-bold text-yellow-600">12</p>
+                <p class="text-xs text-gray-600">Pending Review</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <h4 class="font-bold text-gray-800 mb-4">Recent Submissions</h4>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
+                    <div>
+                        <p class="font-medium text-sm">Sundarbans Site A127</p>
+                        <p class="text-xs text-gray-500">Growth data + 15 photos</p>
+                    </div>
+                    <button class="bg-green-500 text-white px-3 py-1 rounded text-xs">Approve</button>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                    <div>
+                        <p class="font-medium text-sm">Gujarat Site C089</p>
+                        <p class="text-xs text-gray-500">Requires additional verification</p>
+                    </div>
+                    <button class="bg-yellow-500 text-white px-3 py-1 rounded text-xs">Review</button>
+                </div>
+
+                <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                    <div>
+                        <p class="font-medium text-sm">Tamil Nadu Site B203</p>
+                        <p class="text-xs text-gray-500">Auto-verified by IoT sensors</p>
+                    </div>
+                    <button class="bg-blue-500 text-white px-3 py-1 rounded text-xs">Processed</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h4 class="font-bold text-gray-800 mb-4">Risk Alert System</h4>
+            <div class="space-y-3">
+                <div class="p-3 bg-red-100 rounded-lg border-l-4 border-red-500">
+                    <p class="text-sm font-medium text-red-800">🌀 Cyclone Warning</p>
+                    <p class="text-xs text-red-600">Gujarat coast - Auto-transfer initiated</p>
+                </div>
+                <div class="p-3 bg-orange-100 rounded-lg border-l-4 border-orange-500">
+                    <p class="text-sm font-medium text-orange-800">⚠️ Sea Level Rise</p>
+                    <p class="text-xs text-orange-600">Monitoring 3 sites in Odisha</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cara AI Assistant Floating Button -->
+<button id="cara-toggle" onclick="toggleCara()" class="fixed bottom-4 right-4 w-14 h-14 bg-gradient-purple-pink rounded-full shadow-2xl flex items-center justify-center hover-scale transition-all duration-300 z-50">
+    <i data-lucide="bot" class="w-6 h-6 text-white"></i>
+</button>
+
+<!-- Cara Chat Window -->
+<div id="cara-chat" class="fixed bottom-20 right-4 w-80 h-96 bg-white rounded-2xl shadow-2xl border border-gray-200 chat-hidden">
+    <div class="bg-gradient-purple-pink p-4 rounded-t-2xl">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center mr-3">
+                    <i data-lucide="bot" class="w-5 h-5 text-purple-500"></i>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-sm">Cara AI Assistant</p>
+                    <p class="text-purple-100 text-xs">Ask me anything about blue carbon!</p>
+                </div>
+            </div>
+            <button onclick="toggleCara()" class="text-white hover:text-purple-200">✕</button>
+        </div>
+    </div>
+    
+    <div id="chat-messages" class="h-60 p-4 overflow-y-auto">
+        <div class="text-center text-gray-500 text-sm mt-8">
+            <i data-lucide="bot" class="w-12 h-12 mx-auto mb-3 text-purple-400"></i>
+            <p>Hi! I'm Cara, your AI assistant.</p>
+            <p>Try asking me about:</p>
+            <div class="mt-3 space-y-1 text-xs">
+                <button onclick="sendCaraMessage('carbon credits')" class="block w-full bg-purple-100 p-2 rounded text-purple-700 hover:bg-purple-200">
+                    💰 Carbon Credits
+                </button>
+                <button onclick="sendCaraMessage('risk score')" class="block w-full bg-purple-100 p-2 rounded text-purple-700 hover:bg-purple-200">
+                    ⚠️ Risk Assessment
+                </button>
+                <button onclick="sendCaraMessage('blockchain')" class="block w-full bg-purple-100 p-2 rounded text-purple-700 hover:bg-purple-200">
+                    🔗 Blockchain Technology
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="p-4 border-t border-gray-200">
+        <div class="flex">
+            <input type="text" id="cara-input" placeholder="Ask me anything..." class="flex-1 p-2 border border-gray-300 rounded-l-lg text-sm" onkeypress="handleCaraEnter(event)">
+            <button onclick="sendCaraMessage()" class="bg-purple-500 text-white px-4 py-2 rounded-r-lg hover:bg-purple-600">Send</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Project data
+    const projects = {
+        'A127': {
+            id: 'A127',
+            name: 'Sundarbans Mangrove Restoration',
+            location: 'West Bengal Coast',
+            riskScore: 2,
+            progress: 78,
+            credits: 45,
+            coordinates: '21.9497° N, 88.1992° E',
+            ecosystem: 'Mangrove',
+            duration: '3 years',
+            community: 'Gosaba Panchayat',
+            lastUpdate: '2 days ago',
+            images: ['🌱', '🌿', '🌳']
+        },
+        'B203': {
+            id: 'B203',
+            name: 'Seagrass Meadow Conservation',
+            location: 'Tamil Nadu Coast',
+            riskScore: 1,
+            progress: 92,
+            credits: 67,
+            coordinates: '10.7905° N, 79.8378° E',
+            ecosystem: 'Seagrass',
+            duration: '2 years',
+            community: 'Rameshwaram Fishers Collective',
+            lastUpdate: '1 day ago',
+            images: ['🌾', '🐟', '🌊']
+        },
+        'C089': {
+            id: 'C089',
+            name: 'Coastal Wetland Revival',
+            location: 'Gujarat Coast',
+            riskScore: 4,
+            progress: 34,
+            credits: 23,
+            coordinates: '22.2587° N, 68.9631° E',
+            ecosystem: 'Salt Marsh',
+            duration: '4 years',
+            community: 'Kutch Marine NGO',
+            lastUpdate: '5 hours ago',
+            images: ['🌱', '🦆', '💧']
+        }
+    };
+
+    // Chat history
+    let chatHistory = [];
+    
+    // Cara AI responses
+    const caraResponses = {
+        'carbon credits': 'Carbon credits are digital tokens representing verified CO2 absorption by blue carbon ecosystems. Each credit = 1 ton CO2 equivalent.',
+        'risk score': 'Risk scores (1-5) are calculated using historical cyclone data, soil stability, and local climate patterns. Lower scores mean safer investments.',
+        'blockchain': 'All data is stored on Ethereum blockchain with GeoNFTs (ERC-721) ensuring tamper-proof records tied to exact GPS coordinates.',
+        'mrv': 'MRV (Measurement, Reporting, Verification) uses IoT sensors, drones, and mobile uploads for real-time monitoring instead of annual audits.',
+        'default': 'I can help with carbon credits, blockchain technology, risk assessment, MRV processes, and project selection. What would you like to know?'
+    };
+
+    // Navigation functions
+    function showView(viewId) {
+        // Hide all views
+        const views = document.querySelectorAll('.view');
+        views.forEach(view => view.classList.remove('active'));
+        
+        // Show selected view
+        document.getElementById(viewId + '-view').classList.add('active');
+        
+        // Reinitialize icons for the new view
+        setTimeout(() => {
+            lucide.createIcons();
+        }, 50);
+    }
+
+    function showProjectDetail(projectId) {
+        const project = projects[projectId];
+        if (!project) return;
+
+        const getRiskColor = (score) => {
+            if (score <= 2) return 'text-risk-low';
+            if (score <= 3) return 'text-risk-medium';
+            return 'text-risk-high';
+        };
+
+        const content = `
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">${project.name}</h3>
+                <p class="text-gray-600">${project.location}</p>
+                <div class="flex justify-center space-x-2 mt-3">
+                    ${project.images.map(img => `<span class="text-3xl">${img}</span>`).join('')}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="text-center p-3 bg-gray-50 rounded-lg">
+                    <p class="text-xs text-gray-500">Risk Score</p>
+                    <p class="font-bold text-lg ${getRiskColor(project.riskScore)}">
+                        ${project.riskScore}/5
+                    </p>
+                </div>
+                <div class="text-center p-3 bg-gray-50 rounded-lg">
+                    <p class="text-xs text-gray-500">Progress</p>
+                    <p class="font-bold text-lg text-green-600">${project.progress}%</p>
+                </div>
+                <div class="text-center p-3 bg-gray-50 rounded-lg">
+                    <p class="text-xs text-gray-500">Duration</p>
+                    <p class="font-bold text-gray-800">${project.duration}</p>
+                </div>
+                <div class="text-center p-3 bg-gray-50 rounded-lg">
+                    <p class="text-xs text-gray-500">Credits</p>
+                    <p class="font-bold text-blue-600">${project.credits}</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 mb-6">
+                <div class="flex items-center text-sm">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-gray-500 mr-2"></i>
+                    <span class="text-gray-600">Coordinates: ${project.coordinates}</span>
+                </div>
+                <div class="flex items-center text-sm">
+                    <i data-lucide="users" class="w-4 h-4 text-gray-500 mr-2"></i>
+                    <span class="text-gray-600">Community: ${project.community}</span>
+                </div>
+                <div class="flex items-center text-sm">
+                    <i data-lucide="calendar" class="w-4 h-4 text-gray-500 mr-2"></i>
+                    <span class="text-gray-600">Last Update: ${project.lastUpdate}</span>
+                </div>
+            </div>
+
+            <button class="w-full bg-gradient-blue-green text-white py-3 rounded-xl font-bold text-lg hover:shadow-lg transition-all duration-300 hover-scale">
+                🌱 Invest in This Site
+            </button>
+        `;
+
+        document.getElementById('project-detail-content').innerHTML = content;
+        showView('project-detail');
+    }
+
+    // Chat functions
+    function toggleCara() {
+        const chatWindow = document.getElementById('cara-chat');
+        if (chatWindow.classList.contains('chat-hidden')) {
+            chatWindow.classList.remove('chat-hidden');
+            chatWindow.classList.add('chat-visible');
+        } else {
+            chatWindow.classList.remove('chat-visible');
+            chatWindow.classList.add('chat-hidden');
+        }
+    }
+
+    function sendCaraMessage(message) {
+        if (!message) {
+            message = document.getElementById('cara-input').value.trim();
+            if (!message) return;
+        }
+
+        // Add user message to history
+        chatHistory.push({ sender: 'user', message: message });
+        
+        // Get response
+        const response = caraResponses[message.toLowerCase()] || caraResponses['default'];
+        chatHistory.push({ sender: 'cara', message: response });
+        
+        // Update chat display
+        updateChatDisplay();
+        
+        // Clear input
+        document.getElementById('cara-input').value = '';
+    }
+
+    function updateChatDisplay() {
+        const chatMessages = document.getElementById('chat-messages');
+        
+        if (chatHistory.length === 0) {
+            // Show default welcome message (already in HTML)
+            return;
+        }
+
+        let html = '';
+        chatHistory.forEach(chat => {
+            const isUser = chat.sender === 'user';
+            html += `
+                <div class="mb-3 ${isUser ? 'text-right' : 'text-left'}">
+                    <div class="inline-block p-3 rounded-2xl max-w-xs text-sm ${
+                        isUser 
+                            ? 'bg-purple-500 text-white rounded-br-sm' 
+                            : 'bg-gray-100 text-gray-800 rounded-bl-sm'
+                    }">
+                        ${chat.message}
+                    </div>
+                </div>
+            `;
+        });
+        
+        chatMessages.innerHTML = html;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function handleCaraEnter(event) {
+        if (event.key === 'Enter') {
+            sendCaraMessage();
+        }
+    }
+
+    // Initialize icons when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        lucide.createIcons();
+    });
+</script>
+
+</body>
+</html>
