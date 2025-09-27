@@ -3,2602 +3,641 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReLEAF - Advanced Environmental Registry</title>
-    <meta name="description" content="World's Most Advanced Blue Carbon Registry with AI Assistant">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- TensorFlow.js for Advanced AI -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-
+    <title>NCCR Admin - Autonomous MRV System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #0066cc, #004499);
-            --secondary-gradient: linear-gradient(135deg, #00cc99, #009966);
-            --accent-gradient: linear-gradient(135deg, #ff6b35, #ff4500);
-            --success-gradient: linear-gradient(135deg, #10b981, #059669);
-            --warning-gradient: linear-gradient(135deg, #f59e0b, #d97706);
-            --danger-gradient: linear-gradient(135deg, #ef4444, #dc2626);
-            --cara-gradient: linear-gradient(135deg, #8b5cf6, #a855f7);
-            --dark-color: #1e293b;
-            --light-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --text-muted: #64748b;
-            --border-radius: 16px;
-            --shadow: 0 4px 25px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --animation-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
         * {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            background: var(--light-bg);
-            min-height: 100vh;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Login Page Styles */
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh;
+            color: #333;
         }
 
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
-            animation: floatParticles 20s linear infinite;
-        }
-
-        @keyframes floatParticles {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-100px); }
-        }
-
-        .login-card {
+        .admin-header {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: var(--border-radius);
-            padding: 3rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 100%;
-            max-width: 450px;
-            position: relative;
-            z-index: 2;
-            animation: loginSlideUp 0.6s ease-out;
-        }
-
-        @keyframes loginSlideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .login-logo {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-logo i {
-            font-size: 4rem;
-            background: var(--secondary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .login-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .login-subtitle {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-
-        .form-floating {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-control {
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
-            padding: 1rem;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .form-control:focus {
-            border-color: var(--secondary-gradient);
-            box-shadow: 0 0 0 3px rgba(0,204,153,0.1);
-            background: white;
-            outline: none;
-        }
-
-        .btn-login {
-            background: var(--primary-gradient);
-            border: none;
-            color: white;
             padding: 1rem 2rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            width: 100%;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,102,204,0.4);
-            color: white;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--border-color);
-        }
-
-        .divider span {
-            background: white;
-            padding: 0 1rem;
-            color: var(--text-muted);
-        }
-
-        .social-login {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .social-btn {
-            flex: 1;
-            padding: 0.75rem;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            background: white;
-            color: var(--text-muted);
-            transition: var(--transition);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .social-btn:hover {
-            border-color: var(--secondary-gradient);
-            color: var(--dark-color);
-            transform: translateY(-2px);
-            text-decoration: none;
-        }
-
-        /* App Content - Hidden by default */
-        .app-content {
-            display: none;
-        }
-
-        .app-content.show {
-            display: block;
-        }
-
-        /* Enhanced Navbar */
-        .navbar-custom {
-            background: var(--primary-gradient) !important;
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 1rem 0;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .navbar-custom::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            animation: navFloat 20s linear infinite;
-        }
-
-        @keyframes navFloat {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            25% { transform: translateX(10px) translateY(-5px); }
-            50% { transform: translateX(-5px) translateY(10px); }
-            75% { transform: translateX(-10px) translateY(-5px); }
-        }
-
-        .navbar-brand {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: white !important;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 2;
-            transition: var(--transition);
-        }
-
-        .navbar-brand:hover {
-            transform: scale(1.05);
-        }
-
-        .navbar-nav .nav-link {
-            color: rgba(255,255,255,0.9) !important;
-            font-weight: 600;
-            margin: 0 0.75rem;
-            padding: 0.75rem 1.25rem !important;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            position: relative;
-            z-index: 2;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: white !important;
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .navbar-nav .nav-link.active {
-            color: white !important;
-            background: rgba(255,255,255,0.2);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        /* User Profile Enhancement */
-        .user-profile-nav {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem 1.25rem;
-            background: rgba(255,255,255,0.15);
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: var(--transition);
-            position: relative;
-            z-index: 2;
-            cursor: pointer;
-        }
-
-        .user-profile-nav:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 2rem 0;
-            margin-top: 100px;
-        }
-
-        /* Enhanced Cards */
-        .card-custom {
-            border: none;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            overflow: hidden;
-            background: var(--card-bg);
-            position: relative;
-        }
-
-        .card-custom:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .card-header-custom {
-            background: linear-gradient(135deg, var(--light-bg), #e2e8f0);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.5rem;
-            font-weight: 700;
-            color: var(--dark-color);
-        }
-
-        /* Advanced Metric Cards */
-        .metric-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            margin-bottom: 2rem;
-        }
-
-        .metric-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(0,204,153,0.3);
-        }
-
-        .metric-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 1.5rem;
-            background: var(--secondary-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            transition: var(--transition);
-        }
-
-        .metric-card:hover .metric-icon {
-            transform: scale(1.15);
-            box-shadow: 0 8px 25px rgba(0,204,153,0.4);
-        }
-
-        .metric-value {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-label {
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.85rem;
-        }
-
-        .metric-change {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: var(--success-gradient);
-            color: white;
-            font-size: 0.8rem;
-            padding: 0.4rem 0.8rem;
-            border-radius: 15px;
-            font-weight: 700;
-        }
-
-        /* Enhanced Buttons */
-        .btn-custom {
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            padding: 1rem 2rem;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-            border: none;
-        }
-
-        .btn-primary-custom {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .btn-primary-custom:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,102,204,0.4);
-            color: white;
-        }
-
-        .btn-success-custom {
-            background: var(--success-gradient);
-            color: white;
-        }
-
-        .btn-success-custom:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(16,185,129,0.4);
-            color: white;
-        }
-
-        /* Camera Styles */
-        .camera-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            background: #000;
-        }
-
-        .camera-video {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: var(--border-radius);
-        }
-
-        .camera-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: var(--border-radius);
-        }
-
-        .scanning-frame {
-            width: 200px;
-            height: 200px;
-            border: 3px solid #00cc99;
-            border-radius: 12px;
-            position: relative;
-            animation: scanPulse 2s infinite;
-        }
-
-        @keyframes scanPulse {
-            0%, 100% { border-color: #00cc99; transform: scale(1); }
-            50% { border-color: #ff6b35; transform: scale(1.05); }
-        }
-
-        .scanning-line {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00cc99, transparent);
-            animation: scanLine 2s linear infinite;
-        }
-
-        @keyframes scanLine {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-
-        .camera-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 1rem;
-        }
-
-        .camera-btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .camera-btn.capture {
-            background: var(--accent-gradient);
-            color: white;
-        }
-
-        .camera-btn.stop {
-            background: var(--danger-gradient);
-            color: white;
-        }
-
-        .camera-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        /* File Upload Styles */
-        .file-upload-zone {
-            border: 3px dashed var(--border-color);
-            border-radius: var(--border-radius);
-            padding: 3rem 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            background: linear-gradient(135deg, rgba(0,204,153,0.02), rgba(0,204,153,0.05));
-        }
-
-        .file-upload-zone:hover {
-            border-color: var(--secondary-gradient);
-            background: linear-gradient(135deg, rgba(0,204,153,0.05), rgba(0,204,153,0.1));
-            transform: translateY(-5px);
-        }
-
-        .file-upload-zone.dragover {
-            border-color: var(--accent-gradient);
-            background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(255,107,53,0.05));
-            transform: scale(1.02);
-        }
-
-        .upload-icon {
-            font-size: 4rem;
-            color: var(--secondary-gradient);
-            margin-bottom: 1rem;
-            animation: uploadFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes uploadFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .upload-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .upload-subtext {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .file-preview {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: var(--light-bg);
-            border-radius: var(--border-radius);
-            display: none;
-        }
-
-        .file-preview.show {
-            display: block;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .preview-image {
-            max-width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-        }
-
-        .analysis-results {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-top: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .species-result {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-        }
-
-        .species-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--success-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .species-info h5 {
-            margin: 0 0 0.5rem 0;
-            color: var(--dark-color);
-            font-weight: 700;
-        }
-
-        .confidence-bar {
-            width: 200px;
-            height: 8px;
-            background: var(--border-color);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-
-        .confidence-fill {
-            height: 100%;
-            background: var(--success-gradient);
-            border-radius: 4px;
-            transition: width 1s ease-out;
-        }
-
-        /* Cara AI Assistant */
-        .cara-assistant {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-        }
-
-        .cara-button {
-            width: 70px;
-            height: 70px;
-            background: var(--cara-gradient);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.8rem;
-            cursor: pointer;
-            box-shadow: 0 8px 30px rgba(139,92,246,0.4);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cara-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 40px rgba(139,92,246,0.6);
-        }
-
-        /* Cara Chat Window */
-        .cara-chat-window {
-            position: fixed;
-            bottom: 10rem;
-            right: 2rem;
-            width: 400px;
-            max-width: calc(100vw - 4rem);
-            height: 600px;
-            max-height: calc(100vh - 14rem);
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 999;
-            transform: translateY(30px) scale(0.9);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s var(--animation-bounce);
-        }
-
-        .cara-chat-window.show {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .cara-chat-header {
-            background: var(--cara-gradient);
-            color: white;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .cara-avatar {
-            width: 50px;
-            height: 50px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .cara-info h4 {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .cara-status {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .cara-status-dot {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-        }
-
-        .cara-close {
-            margin-left: auto;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .cara-close:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
-        }
-
-        .cara-messages {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-        }
-
-        .cara-message {
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .cara-message.user {
-            flex-direction: row-reverse;
-        }
-
-        .cara-message-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        .cara-message.cara .cara-message-avatar {
-            background: var(--cara-gradient);
-            color: white;
-        }
-
-        .cara-message.user .cara-message-avatar {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .cara-message-content {
-            max-width: 80%;
-            padding: 1rem 1.25rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .cara-message.cara .cara-message-content {
-            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-            color: var(--dark-color);
-            border-bottom-left-radius: 8px;
-        }
-
-        .cara-message.user .cara-message-content {
-            background: var(--primary-gradient);
-            color: white;
-            border-bottom-right-radius: 8px;
-        }
-
-        .cara-message-time {
-            font-size: 0.7rem;
-            opacity: 0.7;
-            margin-top: 0.5rem;
-        }
-
-        /* Quick Prompts */
-        .cara-quick-prompts {
-            padding: 1rem 1.5rem 0;
-            border-top: 1px solid var(--border-color);
-            background: rgba(139,92,246,0.02);
-        }
-
-        .cara-quick-prompts h6 {
-            margin-bottom: 1rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 700;
-        }
-
-        .quick-prompt-btn {
-            background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(139,92,246,0.05));
-            border: 1px solid rgba(139,92,246,0.2);
-            color: #8b5cf6;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin: 0.25rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-block;
-            font-weight: 600;
-        }
-
-        .quick-prompt-btn:hover {
-            background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(139,92,246,0.1));
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(139,92,246,0.3);
-        }
-
-        .cara-input-container {
-            padding: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            background: white;
-        }
-
-        .cara-input-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .cara-input {
-            flex: 1;
-            padding: 1rem 1.25rem;
-            border: 2px solid var(--border-color);
-            border-radius: 25px;
-            outline: none;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .cara-input:focus {
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
-        }
-
-        .cara-send {
-            width: 50px;
-            height: 50px;
-            background: var(--cara-gradient);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .cara-send:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(139,92,246,0.4);
-        }
-
-        .cara-send i {
-            font-size: 1.1rem;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 10000;
-            backdrop-filter: blur(5px);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-container {
-            position: relative;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-            width: 90vw;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow: hidden;
-            animation: modalSlideIn 0.3s ease-out;
-            display: flex;
-            flex-direction: column;
-        }
-
-        @keyframes modalSlideIn {
-            from { transform: translateY(-30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .modal-header h3 {
-            margin: 0;
+        .admin-title {
+            font-size: 1.8rem;
             font-weight: 700;
-        }
-
-        .modal-close-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
+            color: #2c3e50;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: var(--transition);
+            gap: 0.5rem;
         }
 
-        .modal-close-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
+        .admin-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .modal-content {
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge-online {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .badge-mrv {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+        }
+
+        .main-container {
             padding: 2rem;
-            overflow-y: auto;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        /* Enhanced Alerts */
-        .alert-custom {
-            border: none;
-            border-radius: var(--border-radius);
-            padding: 1.25rem 1.5rem;
-            border-left: 4px solid;
+        .mrv-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .mrv-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .panel-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .panel-status {
+            font-size: 0.9rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .satellite-view {
+            height: 300px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
             margin-bottom: 1rem;
         }
 
-        .alert-info-custom {
-            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(59,130,246,0.05));
-            border-left-color: #3b82f6;
-            color: #1e40af;
+        .satellite-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .alert-success-custom {
-            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));
-            border-left-color: #10b981;
-            color: #059669;
+        .satellite-data {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-content {
-                margin-top: 80px;
-                padding: 1rem 0;
-            }
-
-            .cara-chat-window {
-                width: calc(100vw - 2rem);
-                right: 1rem;
-                bottom: 8rem;
-            }
-
-            .cara-assistant {
-                bottom: 1rem;
-                right: 1rem;
-            }
-
-            .modal-container {
-                width: 95vw;
-                margin: 1rem;
-            }
-
-            .login-card {
-                margin: 1rem;
-                padding: 2rem;
-            }
+        .drone-view {
+            height: 300px;
+            background: linear-gradient(45deg, #134e5e, #71b280);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .animate-fade-in {
-            animation: fadeIn 0.8s ease-in-out;
+        .drone-data {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #007bff;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .ai-analysis {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .analysis-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .analysis-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .result-card {
+            background: rgba(255,255,255,0.15);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .result-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .verification-panel {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.95);
+            margin-top: 1rem;
+        }
+
+        .verification-queue {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .verification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+        }
+
+        .site-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .site-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .auto-verify-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .auto-verify-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .real-time-feed {
+            grid-column: 1 / -1;
+            background: #1a1a1a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 1rem;
+            border-radius: 10px;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .feed-line {
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            to { opacity: 1; }
         }
 
-        /* Loading Spinner */
-        .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--border-color);
-            border-top: 4px solid var(--secondary-gradient);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .processing {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .processing::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: scan 2s infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .mrv-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .analysis-results {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-<!-- Login Page -->
-<div id="loginPage" class="login-container">
-    <div class="login-card">
-        <div class="login-logo">
-            <i class="fas fa-leaf"></i>
-            <h1 class="login-title">BlueCarbon Pro</h1>
-            <p class="login-subtitle">Advanced Environmental Registry with AI</p>
+    <header class="admin-header">
+        <div class="admin-title">
+            <i class="fas fa-shield-alt"></i>
+            NCCR Admin - Autonomous MRV System
         </div>
-
-        <form id="loginForm" onsubmit="handleLogin(event)">
-            <div class="form-floating">
-                <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com" required>
-                <label for="loginEmail">Email Address</label>
+        <div class="admin-status">
+            <div class="status-badge badge-online">
+                <i class="fas fa-circle pulse"></i>
+                AI System Online
             </div>
-
-            <div class="form-floating">
-                <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
-                <label for="loginPassword">Password</label>
+            <div class="status-badge badge-mrv">
+                <i class="fas fa-satellite"></i>
+                MRV Active
             </div>
-
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="rememberMe">
-                <label class="form-check-label" for="rememberMe">
-                    Remember me
-                </label>
-            </div>
-
-            <button type="submit" class="btn btn-login">
-                <i class="fas fa-sign-in-alt me-2"></i>
-                Sign In
-            </button>
-        </form>
-
-        <div class="divider">
-            <span>or continue with</span>
         </div>
+    </header>
 
-        <div class="social-login">
-            <a href="#" class="social-btn" onclick="socialLogin('google')">
-                <i class="fab fa-google"></i>
-                <span>Google</span>
-            </a>
-            <a href="#" class="social-btn" onclick="socialLogin('github')">
-                <i class="fab fa-github"></i>
-                <span>GitHub</span>
-            </a>
-        </div>
-
-        <div class="text-center">
-            <small class="text-muted">
-                Demo credentials: any email/password
-            </small>
-        </div>
-    </div>
-</div>
-
-<!-- Main App Content -->
-<div id="appContent" class="app-content">
-    <!-- Enhanced Bootstrap Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#home">
-                <i class="fas fa-leaf me-2"></i>
-                BlueCarbon Pro
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#home" onclick="showSection('home')">
-                            <i class="fas fa-home me-1"></i>Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sites" onclick="showSection('sites')">
-                            <i class="fas fa-map-marker-alt me-1"></i>Sites
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#analytics" onclick="showSection('analytics')">
-                            <i class="fas fa-chart-line me-1"></i>Analytics
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- Enhanced User Profile -->
-                <div class="user-profile-nav" onclick="showUserProfile()">
-                    <div class="user-avatar">JD</div>
-                    <div class="d-none d-md-block">
-                        <div style="color: white; font-weight: 600; font-size: 0.9rem; margin: 0;">John Doe</div>
-                        <div style="color: rgba(255,255,255,0.8); font-size: 0.75rem;">Carbon Steward Level 3</div>
+    <div class="main-container">
+        <div class="mrv-dashboard">
+            <!-- Satellite Analysis Panel -->
+            <div class="mrv-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-satellite"></i>
+                        Satellite Analysis
                     </div>
-                    <div class="dropdown ms-2">
-                        <button class="btn btn-link text-white p-0" data-bs-toggle="dropdown">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#" onclick="showUserProfile()">
-                                <i class="fas fa-user me-2"></i>Profile
-                            </a></li>
-                            <li><a class="dropdown-item" href="#" onclick="showSettings()">
-                                <i class="fas fa-cog me-2"></i>Settings
-                            </a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" onclick="logout()">
-                                <i class="fas fa-sign-out-alt me-2"></i>Logout
-                            </a></li>
-                        </ul>
+                    <div class="panel-status status-active">
+                        <i class="fas fa-check-circle"></i>
+                        Active
                     </div>
                 </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="container">
-            <!-- Home Section -->
-            <div id="home-section" class="content-section animate-fade-in">
-                <!-- AI Insights Alert -->
-                <div class="alert alert-info-custom alert-custom">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-robot me-3" style="font-size: 2rem;"></i>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-2"><strong>🤖 AI Insights Active</strong></h6>
-                            <p class="mb-2">Sundarbans site shows 23% faster growth with current conditions. AI recommends expanding nursery operations within next 15 days.</p>
-                            <small class="text-muted">
-                                <i class="fas fa-chart-line me-1"></i>Growth prediction accuracy: 94.7%
-                                <span class="ms-3"><i class="fas fa-clock me-1"></i>Updated 2 minutes ago</span>
-                            </small>
+                
+                <div class="satellite-view processing">
+                    <div class="satellite-overlay">
+                        <div class="satellite-data">
+                            <i class="fas fa-globe-asia" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <div>Analyzing 47 sites across India</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.5rem;">Last scan: 2 hours ago</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Metrics Row -->
-                <div class="row mb-5">
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="metric-card" onclick="openMetricDetail('credits')">
-                            <div class="metric-change">+15</div>
-                            <div class="metric-icon">
-                                <i class="fas fa-coins"></i>
-                            </div>
-                            <div class="metric-value" id="creditsValue">247</div>
-                            <div class="metric-label">Carbon Credits</div>
-                        </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">94%</div>
+                        <div class="metric-label">Vegetation Health</div>
                     </div>
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="metric-card" onclick="openMetricDetail('sites')">
-                            <div class="metric-change">+2</div>
-                            <div class="metric-icon">
-                                <i class="fas fa-map-marked-alt"></i>
-                            </div>
-                            <div class="metric-value" id="sitesValue">8</div>
-                            <div class="metric-label">Active Sites</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="metric-card" onclick="openMetricDetail('roi')">
-                            <div class="metric-change">+2.3%</div>
-                            <div class="metric-icon">
-                                <i class="fas fa-trending-up"></i>
-                            </div>
-                            <div class="metric-value">15.2%</div>
-                            <div class="metric-label">ROI Growth</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="metric-card" onclick="openMetricDetail('co2')">
-                            <div class="metric-change">+0.8t</div>
-                            <div class="metric-icon">
-                                <i class="fas fa-leaf"></i>
-                            </div>
-                            <div class="metric-value" id="co2Value">4.7t</div>
-                            <div class="metric-label">CO₂ Captured</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <div class="card card-custom">
-                            <div class="card-header-custom">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-bolt me-2"></i>Smart Environmental Actions
-                                </h5>
-                            </div>
-                            <div class="card-body p-4">
-                                <div class="row">
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3">
-                                        <button class="btn btn-primary-custom btn-custom w-100 h-100" onclick="openARScanner()">
-                                            <i class="fas fa-camera d-block mb-2" style="font-size: 2rem;"></i>
-                                            <div>AR Site Scanner</div>
-                                            <small class="d-block mt-1 opacity-75">Real-time analysis</small>
-                                        </button>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3">
-                                        <button class="btn btn-success-custom btn-custom w-100 h-100" onclick="openAddSiteModal()">
-                                            <i class="fas fa-plus-circle d-block mb-2" style="font-size: 2rem;"></i>
-                                            <div>Add Site</div>
-                                            <small class="d-block mt-1 opacity-75">New restoration area</small>
-                                        </button>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3">
-                                        <button class="btn btn-primary-custom btn-custom w-100 h-100" onclick="openDroneSurveyModal()">
-                                            <i class="fas fa-drone d-block mb-2" style="font-size: 2rem;"></i>
-                                            <div>Drone Survey</div>
-                                            <small class="d-block mt-1 opacity-75">Aerial monitoring</small>
-                                        </button>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3">
-                                        <button class="btn btn-success-custom btn-custom w-100 h-100" onclick="openSpeciesModal()">
-                                            <i class="fas fa-seedling d-block mb-2" style="font-size: 2rem;"></i>
-                                            <div>Species AI</div>
-                                            <small class="d-block mt-1 opacity-75">Plant identification</small>
-                                        </button>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3">
-                                        <button class="btn btn-primary-custom btn-custom w-100 h-100" onclick="openWeatherModal()">
-                                            <i class="fas fa-cloud-sun d-block mb-2" style="font-size: 2rem;"></i>
-                                            <div>Weather AI</div>
-                                            <small class="d-block mt-1 opacity-75">Climate analysis</small>
-                                        </button>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3">
-                                        <button class="btn btn-success-custom btn-custom w-100 h-100" onclick="openReportModal()">
-                                            <i class="fas fa-file-chart-column d-block mb-2" style="font-size: 2rem;"></i>
-                                            <div>AI Reports</div>
-                                            <small class="d-block mt-1 opacity-75">Smart analytics</small>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="metric-card">
+                        <div class="metric-value">+12%</div>
+                        <div class="metric-label">Coverage Growth</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Sites Section -->
-            <div id="sites-section" class="content-section" style="display: none;">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h2><i class="fas fa-map-marked-alt me-2"></i>Site Management</h2>
-                        <p class="text-muted mb-0">Real-time monitoring across all restoration sites</p>
+            <!-- Drone Monitoring Panel -->
+            <div class="mrv-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-drone"></i>
+                        Drone Monitoring
                     </div>
-                    <button class="btn btn-success-custom btn-custom" onclick="openAddSiteModal()">
-                        <i class="fas fa-plus me-2"></i>Add New Site
-                    </button>
+                    <div class="panel-status status-active">
+                        <i class="fas fa-check-circle"></i>
+                        Active
+                    </div>
+                </div>
+                
+                <div class="drone-view processing">
+                    <div class="drone-data">
+                        <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <div>High-resolution site imaging</div>
+                        <div style="font-size: 0.9rem; margin-top: 0.5rem;">Last flight: Yesterday</div>
+                    </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card card-custom">
-                            <div class="card-header-custom">
-                                <h5 class="mb-0">🌿 Your Blue Carbon Sites</h5>
-                            </div>
-                            <div class="card-body">
-                                <p>Comprehensive site management with real-time monitoring.</p>
-                                <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <button class="btn btn-primary-custom w-100" onclick="showSiteDetails()">
-                                            <i class="fas fa-info-circle me-2"></i>Site Details
-                                        </button>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <button class="btn btn-success-custom w-100" onclick="showSiteMap()">
-                                            <i class="fas fa-globe-asia me-2"></i>Interactive Map
-                                        </button>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <button class="btn btn-primary-custom w-100" onclick="showSensors()">
-                                            <i class="fas fa-satellite-dish me-2"></i>IoT Sensors
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">2,847</div>
+                        <div class="metric-label">Trees Counted</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">89%</div>
+                        <div class="metric-label">Survival Rate</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Analytics Section -->
-            <div id="analytics-section" class="content-section" style="display: none;">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h2><i class="fas fa-chart-line me-2"></i>Advanced Analytics</h2>
-                        <p class="text-muted mb-0">AI-powered environmental data analysis</p>
-                    </div>
-                    <button class="btn btn-success-custom btn-custom" onclick="openReportModal()">
-                        <i class="fas fa-download me-2"></i>Generate Report
-                    </button>
+            <!-- AI Analysis Results -->
+            <div class="mrv-panel ai-analysis">
+                <div class="analysis-header">
+                    <i class="fas fa-brain"></i>
+                    <h3>AI-Powered Analysis Results</h3>
                 </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card card-custom">
-                            <div class="card-header-custom">
-                                <h5 class="mb-0">📊 Performance Analytics Dashboard</h5>
-                            </div>
-                            <div class="card-body">
-                                <p>Advanced analytics with predictive modeling.</p>
-                                <div class="row">
-                                    <div class="col-md-3 mb-3">
-                                        <button class="btn btn-primary-custom w-100" onclick="showGrowthAnalytics()">
-                                            <i class="fas fa-chart-area me-2"></i>Growth Analytics
-                                        </button>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                        <button class="btn btn-success-custom w-100" onclick="showCarbonAnalytics()">
-                                            <i class="fas fa-leaf me-2"></i>Carbon Analysis
-                                        </button>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                        <button class="btn btn-primary-custom w-100" onclick="showMarketAnalytics()">
-                                            <i class="fas fa-coins me-2"></i>Market Trends
-                                        </button>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                        <button class="btn btn-success-custom w-100" onclick="showPredictions()">
-                                            <i class="fas fa-crystal-ball me-2"></i>AI Predictions
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Cara AI Assistant -->
-<div class="cara-assistant">
-    <button class="cara-button" onclick="toggleCaraChat()">
-        <i class="fas fa-robot"></i>
-    </button>
-</div>
-
-<!-- Enhanced Cara Chat Window -->
-<div class="cara-chat-window" id="caraChat">
-    <div class="cara-chat-header">
-        <div class="cara-avatar">
-            <i class="fas fa-robot"></i>
-        </div>
-        <div class="cara-info">
-            <h4>Cara AI Assistant</h4>
-            <div class="cara-status">
-                <div class="cara-status-dot"></div>
-                <span>Online • Blue Carbon Expert</span>
-            </div>
-        </div>
-        <button class="cara-close" onclick="toggleCaraChat()">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <div class="cara-messages" id="caraMessages">
-        <div class="cara-message cara">
-            <div class="cara-message-avatar">🤖</div>
-            <div class="cara-message-content">
-                <div>Hi! I'm Cara, your advanced AI assistant for blue carbon projects. I can help with site analysis, growth predictions, market insights, and environmental data. Try the quick prompts below!</div>
-                <div class="cara-message-time">Just now</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Quick Prompts Section -->
-    <div class="cara-quick-prompts">
-        <h6><i class="fas fa-bolt"></i> Quick Prompts</h6>
-        <div class="d-flex flex-wrap">
-            <span class="quick-prompt-btn" onclick="useQuickPrompt('How are my sites performing?')">📊 Site Performance</span>
-            <span class="quick-prompt-btn" onclick="useQuickPrompt('What is my carbon credit forecast?')">💰 Credit Forecast</span>
-            <span class="quick-prompt-btn" onclick="useQuickPrompt('Show growth optimization tips')">🌱 Growth Tips</span>
-            <span class="quick-prompt-btn" onclick="useQuickPrompt('Weather impact on my sites')">🌤️ Weather Analysis</span>
-            <span class="quick-prompt-btn" onclick="useQuickPrompt('Best sites for investment')">🎯 Investment Guide</span>
-            <span class="quick-prompt-btn" onclick="useQuickPrompt('Generate monthly report')">📄 Monthly Report</span>
-            <span class="quick-prompt-btn" onclick="useQuickPrompt('Carbon market trends')">📈 Market Trends</span>
-            <span class="quick-prompt-btn" onclick="useQuickPrompt('Maintenance recommendations')">🔧 Maintenance</span>
-        </div>
-    </div>
-
-    <div class="cara-input-container">
-        <div class="cara-input-group">
-            <input type="text" class="cara-input" id="caraInput" placeholder="Ask me anything about your blue carbon projects...">
-            <button class="cara-send" onclick="sendCaraMessage()">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Working Modals -->
-<!-- Add Site Modal -->
-<div id="addSiteModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'addSiteModal')">
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3><i class="fas fa-plus-circle me-2"></i>Add New Site</h3>
-            <button class="modal-close-btn" onclick="closeModal('addSiteModal')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <div class="mb-3">
-                <label class="form-label">Site Name</label>
-                <input type="text" class="form-control" placeholder="Enter site name">
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Latitude</label>
-                    <input type="number" class="form-control" placeholder="0.000000" step="0.000001">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Longitude</label>
-                    <input type="number" class="form-control" placeholder="0.000000" step="0.000001">
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Ecosystem Type</label>
-                <select class="form-control">
-                    <option>Mangrove</option>
-                    <option>Seagrass</option>
-                    <option>Salt Marsh</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Area (hectares)</label>
-                <input type="number" class="form-control" placeholder="0.0" step="0.1">
-            </div>
-            <button class="btn btn-success-custom w-100" onclick="addSiteSubmit()">
-                <i class="fas fa-save me-2"></i>Add Site
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Drone Survey Modal -->
-<div id="droneSurveyModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'droneSurveyModal')">
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3><i class="fas fa-drone me-2"></i>Schedule Drone Survey</h3>
-            <button class="modal-close-btn" onclick="closeModal('droneSurveyModal')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <div class="mb-3">
-                <label class="form-label">Select Site</label>
-                <select class="form-control">
-                    <option>Sundarbans Delta (A127)</option>
-                    <option>Tamil Nadu Coast (B203)</option>
-                    <option>Gujarat Coast (C089)</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Survey Type</label>
-                <select class="form-control">
-                    <option>Comprehensive Analysis</option>
-                    <option>Growth Monitoring</option>
-                    <option>Damage Assessment</option>
-                </select>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Survey Date</label>
-                    <input type="date" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Survey Time</label>
-                    <input type="time" class="form-control">
-                </div>
-            </div>
-            <button class="btn btn-primary-custom w-100" onclick="scheduleDrone()">
-                <i class="fas fa-calendar-check me-2"></i>Schedule Survey
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- AR Scanner Modal -->
-<div id="arScannerModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'arScannerModal')">
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3><i class="fas fa-camera me-2"></i>AR Site Scanner</h3>
-            <button class="modal-close-btn" onclick="closeModal('arScannerModal')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <div class="camera-container">
-                <video id="cameraVideo" class="camera-video" autoplay muted playsinline style="display: none;"></video>
-                <div id="cameraPlaceholder" class="camera-video d-flex align-items-center justify-content-center" style="background: #000; color: white;">
-                    <div class="text-center">
-                        <i class="fas fa-camera fa-3x mb-3"></i>
-                        <p>Click "Start Camera" to begin AR scanning</p>
-                    </div>
-                </div>
-                <div class="camera-overlay" id="scanningOverlay" style="display: none;">
-                    <div class="scanning-frame">
-                        <div class="scanning-line"></div>
-                    </div>
-                </div>
-                <div class="camera-controls">
-                    <button class="camera-btn capture" onclick="startCamera()">
-                        <i class="fas fa-video me-2"></i>Start Camera
-                    </button>
-                    <button class="camera-btn stop" onclick="stopCamera()" style="display: none;">
-                        <i class="fas fa-stop me-2"></i>Stop Camera
-                    </button>
-                    <button class="camera-btn capture" onclick="captureFrame()" style="display: none;">
-                        <i class="fas fa-camera me-2"></i>Capture
-                    </button>
-                </div>
-            </div>
-            <div id="scanResults" style="display: none;">
-                <div class="alert alert-success-custom mt-3">
-                    <h6><i class="fas fa-check-circle me-2"></i>AR Scan Complete!</h6>
-                    <div id="scanData"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Species AI Modal -->
-<div id="speciesModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'speciesModal')">
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3><i class="fas fa-seedling me-2"></i>AI Species Identifier</h3>
-            <button class="modal-close-btn" onclick="closeModal('speciesModal')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <div class="file-upload-zone" id="fileUploadZone" ondrop="handleFileDrop(event)" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" onclick="document.getElementById('speciesImageInput').click()">
-                <div class="upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                </div>
-                <div class="upload-text">Upload Plant Image</div>
-                <div class="upload-subtext">Click to select or drag and drop an image file</div>
-                <input type="file" id="speciesImageInput" accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
-            </div>
-
-            <div class="file-preview" id="filePreview">
-                <img id="previewImage" class="preview-image" alt="Preview">
-                <div class="text-center">
-                    <button class="btn btn-success-custom" onclick="analyzeSpecies()">
-                        <i class="fas fa-brain me-2"></i>Analyze with AI
-                    </button>
-                </div>
-            </div>
-
-            <div id="speciesResults" style="display: none;">
+                
                 <div class="analysis-results">
-                    <h6><i class="fas fa-leaf me-2"></i>Species Analysis Results</h6>
-                    <div id="speciesData"></div>
+                    <div class="result-card">
+                        <div class="result-title">
+                            <i class="fas fa-leaf"></i>
+                            Biomass Analysis
+                        </div>
+                        <div>Carbon sequestration rate: <strong>2.3 tons/hectare/year</strong></div>
+                        <div style="font-size: 0.9rem; margin-top: 0.5rem;">Confidence: 96%</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-title">
+                            <i class="fas fa-chart-line"></i>
+                            Growth Prediction
+                        </div>
+                        <div>Projected coverage in 12 months: <strong>+28%</strong></div>
+                        <div style="font-size: 0.9rem; margin-top: 0.5rem;">Model accuracy: 94%</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-title">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Risk Assessment
+                        </div>
+                        <div>Climate risk score: <strong>Low (15/100)</strong></div>
+                        <div style="font-size: 0.9rem; margin-top: 0.5rem;">Sea level impact minimal</div>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Autonomous Verification Queue -->
+            <div class="mrv-panel verification-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-robot"></i>
+                        Autonomous Verification Queue
+                    </div>
+                </div>
+                
+                <div class="verification-queue">
+                    <div class="verification-item">
+                        <div class="site-info">
+                            <i class="fas fa-map-marker-alt" style="color: #28a745;"></i>
+                            <div>
+                                <div><strong>Sundarbans Site A127</strong></div>
+                                <div style="font-size: 0.9rem; color: #6c757d;">Mangrove restoration progress</div>
+                            </div>
+                        </div>
+                        <div class="site-status">
+                            <button class="auto-verify-btn" onclick="autoVerify('A127')">
+                                <i class="fas fa-check"></i>
+                                Auto-Verify
+                            </button>
+                            <div style="font-size: 0.8rem; margin-top: 0.2rem;">+25 credits pending</div>
+                        </div>
+                    </div>
+                    
+                    <div class="verification-item">
+                        <div class="site-info">
+                            <i class="fas fa-map-marker-alt" style="color: #007bff;"></i>
+                            <div>
+                                <div><strong>Tamil Nadu Site B203</strong></div>
+                                <div style="font-size: 0.9rem; color: #6c757d;">Seagrass meadow expansion</div>
+                            </div>
+                        </div>
+                        <div class="site-status">
+                            <button class="auto-verify-btn" onclick="autoVerify('B203')">
+                                <i class="fas fa-check"></i>
+                                Auto-Verify
+                            </button>
+                            <div style="font-size: 0.8rem; margin-top: 0.2rem;">+18 credits pending</div>
+                        </div>
+                    </div>
+                    
+                    <div class="verification-item">
+                        <div class="site-info">
+                            <i class="fas fa-map-marker-alt" style="color: #ffc107;"></i>
+                            <div>
+                                <div><strong>Gujarat Site C089</strong></div>
+                                <div style="font-size: 0.9rem; color: #6c757d;">Salt marsh conservation</div>
+                            </div>
+                        </div>
+                        <div class="site-status">
+                            <button class="auto-verify-btn" onclick="autoVerify('C089')">
+                                <i class="fas fa-check"></i>
+                                Auto-Verify
+                            </button>
+                            <div style="font-size: 0.8rem; margin-top: 0.2rem;">+32 credits pending</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Processing Feed -->
+            <div class="real-time-feed">
+                <div class="feed-line">[2024-09-27 14:23:15] AI_MRV > Satellite data received from ISRO for 47 sites</div>
+                <div class="feed-line">[2024-09-27 14:23:18] AI_MRV > Processing multispectral imagery...</div>
+                <div class="feed-line">[2024-09-27 14:23:22] AI_MRV > Vegetation health analysis complete - 94% avg health</div>
+                <div class="feed-line">[2024-09-27 14:23:25] AI_MRV > Drone flight data integrated from 12 sites</div>
+                <div class="feed-line">[2024-09-27 14:23:28] AI_MRV > Tree counting algorithm processed 2,847 specimens</div>
+                <div class="feed-line">[2024-09-27 14:23:31] AI_MRV > Carbon sequestration calculations updated</div>
+                <div class="feed-line">[2024-09-27 14:23:34] AI_MRV > Smart contracts triggered for credit generation</div>
+                <div class="feed-line">[2024-09-27 14:23:37] BLOCKCHAIN > 75 new carbon credits minted and verified</div>
+                <div class="feed-line">[2024-09-27 14:23:40] AI_MRV > Risk assessment complete - 3 sites flagged for attention</div>
+                <div class="feed-line">[2024-09-27 14:23:43] AI_MRV > Autonomous verification ready for 3 sites</div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Generic Content Modal -->
-<div id="contentModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'contentModal')">
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3 id="modalTitle"><i class="fas fa-info-circle me-2"></i>Information</h3>
-            <button class="modal-close-btn" onclick="closeModal('contentModal')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <div id="modalBody">
-                <p>Loading content...</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    // BlueCarbon Pro Advanced Application
-    class BlueCarbonAdvancedApp {
-        constructor() {
-            this.currentSection = 'home';
-            this.caraOpen = false;
-            this.isLoggedIn = false;
-            this.cameraStream = null;
-            this.aiResponses = this.initializeAIResponses();
-            this.conversationContext = [];
-            this.metrics = {
-                credits: 247,
-                sites: 8,
-                co2: 4.7,
-                roi: 15.2
-            };
-            this.init();
-        }
-
-        init() {
-            console.log('🌊 BlueCarbon Pro Advanced initialized');
-            this.setupEventListeners();
-            this.checkLoginStatus();
-            this.loadTensorFlowModel();
-        }
-
-        checkLoginStatus() {
-            const savedLogin = localStorage.getItem('blueCarbon_loggedIn');
-            if (savedLogin === 'true') {
-                this.showApp();
-            } else {
-                this.showLogin();
-            }
-        }
-
-        showLogin() {
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('appContent').classList.remove('show');
-            this.isLoggedIn = false;
-        }
-
-        showApp() {
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('appContent').classList.add('show');
-            this.isLoggedIn = true;
-            this.showNotification('🎉 Welcome back to BlueCarbon Pro! All AI systems operational.', 'success');
-        }
-
-        async loadTensorFlowModel() {
-            try {
-                // Load a pre-trained MobileNet model for plant classification
-                this.model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
-                console.log('✅ TensorFlow.js model loaded successfully');
-            } catch (error) {
-                console.log('⚠️ TensorFlow.js model loading failed, using mock AI');
-                this.model = null;
-            }
-        }
-
-        initializeAIResponses() {
-            return {
-                'performance': {
-                    keywords: ['performance', 'performing', 'sites performing', 'how are', 'status'],
-                    responses: [
-                        "🎯 **Exceptional Performance Overview:**\n\n• **Total Credits:** 247 BCARB tokens (+15 this month)\n• **Active Sites:** 8 restoration areas (100% operational)\n• **CO₂ Captured:** 4.7 tons (+0.8t monthly growth)\n• **ROI Achievement:** 15.2% (exceeds industry average by 3.4%)\n\n**Top Performer:** Sundarbans Delta shows 23% above-target growth with optimal weather conditions driving accelerated sequestration rates.",
-                        "📊 **Outstanding Q4 Results:**\n\n• **Portfolio Value:** ₹47,000 (15% monthly increase)\n• **Environmental Impact:** Equivalent to removing 1,024 cars annually\n• **Operational Excellence:** 98.7% sensor uptime, 94.7% AI prediction accuracy\n• **Market Position:** Your sites outperform regional averages by 18%\n\nAll sites exceeding baseline targets with Tamil Nadu Coast nearing 96% completion milestone.",
-                        "🌟 **Advanced Analytics Summary:**\n\n• **Growth Acceleration:** 6 of 8 sites showing above-normal rates\n• **Biodiversity Index:** +18.5% species diversity improvement\n• **Carbon Efficiency:** 2.3t CO₂/hectare (industry-leading rates)\n• **Technology Integration:** IoT sensors, AI predictions, drone monitoring fully operational\n\nRecommendation: Expand nursery operations at Sundarbans within 15 days to capitalize on optimal conditions."
-                    ]
-                },
-                'forecast': {
-                    keywords: ['forecast', 'credit forecast', 'prediction', 'future', 'projection'],
-                    responses: [
-                        "💰 **Advanced Credit Forecasting:**\n\n**October 2025 Projections:**\n• **New Credits:** 45-60 BCARB tokens\n• **Market Value:** ₹8,550-₹11,400 (at current ₹190/token)\n• **Peak Pricing Window:** October 15-20 (predicted 20-25% surge)\n\n**AI Market Analysis:** Corporate ESG mandates driving unprecedented demand. Blue carbon credits outperforming traditional offsets by 23%. Hold 60% of current portfolio for maximum returns.",
-                        "📈 **Quarterly Growth Trajectory:**\n\n**Q4 2025 Outlook:**\n• **Total Projected:** 180+ credits (65% above Q3)\n• **Revenue Potential:** ₹34,200-₹40,500\n• **Completion Bonuses:** Tamil Nadu (25 credits), Sundarbans expansion (40 credits)\n\n**Strategic Timing:** Market models show optimal selling periods align with COP climate agreements and Fortune 500 sustainability reporting deadlines.",
-                        "🎯 **Annual Performance Forecast:**\n\n**2025 Year-End Projections:**\n• **Total Credits:** 300-350 BCARB tokens\n• **Portfolio Value:** ₹57,000-₹66,500\n• **ROI Trajectory:** 18-22% annual return\n\n**Growth Drivers:** Sundarbans high-performance scaling, Tamil Nadu completion bonuses, new Gujarat site establishment, and premium blue carbon market positioning."
-                    ]
-                },
-                'growth': {
-                    keywords: ['growth', 'optimization', 'tips', 'improve', 'optimize'],
-                    responses: [
-                        "🌱 **Advanced Growth Optimization Protocol:**\n\n**Immediate Actions (Next 15 Days):**\n• **Sundarbans Nursery Expansion:** Increase capacity by 35% (optimal weather window)\n• **Smart Irrigation Deployment:** Install IoT moisture sensors at Gujarat site\n• **Species Diversification:** Introduce nitrogen-fixing companion plants\n• **Precision Agriculture:** Deploy drone-based organic fertilizer application\n\n**Expected Impact:** 15-20% growth acceleration across all sites.",
-                        "⚡ **AI-Powered Enhancement Strategies:**\n\n**Technology Integration:**\n• **Satellite Monitoring:** Real-time growth pattern analysis\n• **Genetic Optimization:** Climate-resilient seedling selection\n• **Tidal Flow Engineering:** Micro-channel creation for nutrient delivery\n• **Predictive Maintenance:** Sensor-based intervention scheduling\n\n**Scientific Approach:** Implement precision planting density (20% increase in high-performance zones), optimize pH levels, and establish marine permaculture systems.",
-                        "🔬 **Environmental Optimization Framework:**\n\n**Ecosystem Enhancement:**\n• **Mangrove Systems:** Focus on Rhizophora species (2.8t CO₂/hectare)\n• **Seagrass Meadows:** Zostera marina cultivation (1.4t CO₂/hectare)\n• **Salt Marsh Integration:** Halophyte companion planting\n• **Biodiversity Corridors:** Inter-site species migration pathways\n\n**Performance Multipliers:** Current conditions support 23% above-normal sequestration rates through optimal temperature, salinity, and tidal patterns."
-                    ]
-                },
-                'weather': {
-                    keywords: ['weather', 'climate', 'impact', 'conditions', 'temperature'],
-                    responses: [
-                        "🌤️ **Comprehensive Climate Analysis:**\n\n**Current Conditions (Optimal Zone):**\n• **Sundarbans:** 28°C, 82% humidity, gentle tidal flows\n• **Tamil Nadu:** 26°C, perfect salinity levels (30-32 PSU)\n• **Gujarat:** 24°C, moderate wind patterns\n\n**Monsoon Forecast:** Approaching seasonal rains will boost growth rates 15-20% over next 60 days. UV levels optimal for photosynthesis across all ecosystems.",
-                        "☀️ **Advanced Weather Intelligence:**\n\n**Maritime Conditions:**\n• **Ocean Temperature:** Stable thermal stratification\n• **Tidal Patterns:** Optimal nutrient distribution cycles\n• **Atmospheric CO₂:** 420 ppm (supporting enhanced photosynthesis)\n• **Storm Risk:** Minimal (12% probability next 90 days)\n\n**AI Prediction:** Weather stations show 94% favorable conditions for next 30 days with sustained growth acceleration period.",
-                        "🌊 **Climate Impact Optimization:**\n\n**Seasonal Advantages:**\n• **Temperature Ranges:** Perfect for all target species\n• **Moisture Levels:** Ideal for root establishment\n• **Wind Patterns:** Supporting natural seed dispersal\n• **Salinity Gradients:** Optimal for mangrove reproduction\n\n**Strategic Recommendations:** Capitalize on current conditions with increased planting activities. Monsoon preparation advised in 3 weeks for maximum growth capture during peak season."
-                    ]
-                },
-                'investment': {
-                    keywords: ['investment', 'best sites', 'invest', 'recommend', 'profitable'],
-                    responses: [
-                        "🎯 **Strategic Investment Portfolio:**\n\n**Priority Allocation:**\n1. **Sundarbans Expansion (40%)** - 23% above-target performance, proven ROI\n2. **Tamil Nadu Scaling (30%)** - 96% completion, bonus credits incoming\n3. **Gujarat Diversification (20%)** - Emerging market, high-growth potential\n4. **Kerala Seagrass Trials (10%)** - R&D investment, breakthrough potential\n\n**Current ROI:** 15.2% vs industry 11.8% (+28% outperformance)",
-                        "💎 **Advanced Portfolio Analysis:**\n\n**Performance Metrics:**\n• **Mangrove Sites:** 18.5% ROI, highest sequestration rates\n• **Seagrass Projects:** 96% success rate, stability focus\n• **Salt Marsh:** Risk diversification, coastal protection value\n• **Blue Carbon Premium:** 23% price premium over traditional offsets\n\n**Market Intelligence:** Institutional demand up 25% quarterly, Fortune 500 adoption accelerating, UN Ocean Decade initiatives creating supply constraints.",
-                        "📊 **Investment Optimization Strategy:**\n\n**Growth Projections:**\n• **18-22% Annual ROI** with strategic scaling\n• **Premium Market Positioning** in certified coastal restoration\n• **Technology Integration** driving operational efficiency\n• **Policy Tailwinds** supporting blue carbon initiatives\n\n**Recommended Actions:** Focus on proven performers while diversifying into emerging ecosystems. Current market conditions favor 20-25% portfolio expansion over next quarter."
-                    ]
-                },
-                'report': {
-                    keywords: ['report', 'monthly', 'generate', 'summary', 'analytics'],
-                    responses: [
-                        "📄 **Comprehensive Monthly Report - September 2025:**\n\n**Executive Summary:**\n• **Credits Earned:** 247 (+15 monthly growth)\n• **Portfolio Value:** ₹47,000 (15% increase)\n• **Operational Status:** 8 sites, 100% operational\n• **Environmental Impact:** 4.7t CO₂ captured, 1,024 cars equivalent\n\n**Performance Analysis:** All targets exceeded by 12%, sensor network 98.7% uptime, AI prediction accuracy 94.7%.",
-                        "📋 **Advanced Analytics Dashboard:**\n\n**Key Performance Indicators:**\n• **Growth Rate:** 89% average site progress\n• **Biodiversity Index:** +18.5% species improvement\n• **Carbon Efficiency:** 2.3t CO₂/hectare sequestration\n• **Market Performance:** 18% above regional averages\n\n**Regulatory Compliance:** Full documentation ready, environmental impact assessment completed, stakeholder reporting automated.",
-                        "📊 **Strategic Performance Review:**\n\n**Site-by-Site Analysis:**\n• **Sundarbans (A127):** 89% complete, top performer\n• **Tamil Nadu (B203):** 96% complete, maintenance phase\n• **Gujarat (C089):** 45% complete, accelerating growth\n\n**Predictive Modeling:** ROI projections through 2026, growth trajectory optimization, market positioning analysis. Professional presentation format with executive stakeholder summary included."
-                    ]
-                },
-                'market': {
-                    keywords: ['market', 'trends', 'prices', 'trading', 'demand'],
-                    responses: [
-                        "📈 **Blue Carbon Market Intelligence:**\n\n**Current Market Dynamics:**\n• **BCARB Price:** ₹190/credit (15% monthly increase)\n• **Market Volume:** 25% quarterly growth in institutional demand\n• **Premium Positioning:** Blue carbon outperforming traditional offsets by 23%\n• **Corporate Adoption:** Fortune 500 ESG mandates driving unprecedented demand\n\n**Strategic Insight:** Your 247 credits positioned in highest-growth segment of carbon markets.",
-                        "💹 **Advanced Market Analysis:**\n\n**Global Trends:**\n• **Policy Support:** UN Ocean Decade initiatives, government incentives expanding\n• **Supply Constraints:** Limited certified blue carbon projects creating scarcity premium\n• **Technology Integration:** Blockchain verification, satellite monitoring driving trust\n• **International Compliance:** Paris Agreement Article 6 supporting cross-border trading\n\n**Investment Thesis:** Blue carbon represents next-generation nature-based solutions with institutional backing.",
-                        "🌍 **Market Forecast & Strategy:**\n\n**Price Projections:**\n• **Q4 2025:** 20-25% appreciation expected\n• **Peak Window:** October 15-20 optimal selling opportunity\n• **Annual Outlook:** ₹220-₹240/credit by year-end\n• **Growth Drivers:** Corporate net-zero commitments, climate regulation compliance\n\n**Portfolio Strategy:** Hold 60% for appreciation, trade 40% for liquidity. Your certified coastal restoration projects command premium pricing in institutional markets."
-                    ]
-                },
-                'maintenance': {
-                    keywords: ['maintenance', 'recommendations', 'repair', 'service', 'upkeep'],
-                    responses: [
-                        "🔧 **Predictive Maintenance Schedule:**\n\n**Immediate Actions:**\n• **Tamil Nadu Sensor Replacement:** Tomorrow 9 AM (technician confirmed)\n• **Quarterly IoT Calibration:** January 15, 2026\n• **Drone Battery Replacement:** 2 weeks (parts pre-ordered)\n• **Backup System Check:** All redundancies operational\n\n**Performance Impact:** Predictive maintenance reducing system downtime by 67% compared to reactive approach.",
-                        "⚙️ **Advanced System Status:**\n\n**Current Operations:**\n• **Sensor Network:** 24/26 operational (92.3% uptime)\n• **AI Diagnostics:** Identifying potential issues 48 hours early\n• **Equipment Status:** All systems within performance specifications\n• **Remote Monitoring:** Minimizing on-site visits by 40%\n\n**Optimization Results:** Automated maintenance protocols prevent 87% of potential system failures.",
-                        "🛠️ **Smart Maintenance Protocol:**\n\n**Technology Integration:**\n• **Machine Learning Algorithms:** Preventing 87% of equipment failures\n• **Automated Parts Ordering:** Zero stockout incidents this quarter\n• **Self-Calibrating Sensors:** Real-time accuracy maintenance\n• **Cost Optimization:** 35% reduction in maintenance expenses\n\n**Next Generation:** Implementing blockchain-based maintenance records and AR-guided repair procedures for field technicians."
-                    ]
-                },
-                'general': {
-                    keywords: ['help', 'hello', 'hi', 'cara', 'assist', 'support'],
-                    responses: [
-                        "👋 **Hello! I'm Cara, your Advanced AI Assistant**\n\nI specialize in blue carbon project optimization with capabilities including:\n• **Real-time Analytics:** 10,000+ data points analyzed hourly\n• **Predictive Modeling:** Growth forecasts, market trends, risk assessment\n• **Strategic Recommendations:** Site optimization, investment guidance\n• **Environmental Intelligence:** Weather patterns, ecosystem health monitoring\n\nTry the quick prompts above or ask me anything specific about your projects!",
-                        "🤖 **Advanced AI Capabilities Available:**\n\n**Core Functions:**\n• **Environmental Monitoring:** Real-time sensor data analysis\n• **Financial Optimization:** ROI maximization, market timing\n• **Predictive Analytics:** Growth models, weather impact assessment\n• **Technical Support:** Equipment diagnostics, maintenance scheduling\n\n**Specialized Knowledge:** Marine ecosystems, carbon credit markets, sustainability reporting, and regulatory compliance. How can I help optimize your blue carbon success?",
-                        "🌊 **Welcome to Advanced Blue Carbon Intelligence!**\n\n**My Expertise:**\n• **Site Performance:** Growth optimization, species selection\n• **Market Intelligence:** Credit pricing, trading strategies\n• **Technology Integration:** IoT sensors, drone monitoring, satellite imagery\n• **Regulatory Compliance:** Environmental impact reporting, certification processes\n\n**Available 24/7:** Continuous monitoring and instant insights for your restoration projects. What would you like to explore today?"
-                    ]
-                }
-            };
-        }
-
-        setupEventListeners() {
-            // Cara input handling
-            const caraInput = document.getElementById('caraInput');
-            if (caraInput) {
-                caraInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        this.sendCaraMessage();
-                    }
-                });
-            }
-
-            // Global keyboard shortcuts
-            document.addEventListener('keydown', (e) => {
-                // Escape key functionality
-                if (e.key === 'Escape') {
-                    if (this.caraOpen) {
-                        this.toggleCaraChat();
-                    }
-                    this.closeAllModals();
-                    if (this.cameraStream) {
-                        this.stopCamera();
-                    }
-                }
-
-                // Ctrl/Cmd + K for Cara
-                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                    e.preventDefault();
-                    if (!this.caraOpen) {
-                        this.toggleCaraChat();
-                    }
-                }
-            });
-        }
-
-        closeAllModals() {
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.style.display = 'none';
-            });
-        }
-
-        // Advanced Camera Functions
-        async startCamera() {
-            try {
-                this.cameraStream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 },
-                        facingMode: 'environment' // Use back camera on mobile
-                    },
-                    audio: false
-                });
-
-                const video = document.getElementById('cameraVideo');
-                const placeholder = document.getElementById('cameraPlaceholder');
-                const overlay = document.getElementById('scanningOverlay');
-
-                video.srcObject = this.cameraStream;
-                video.style.display = 'block';
-                placeholder.style.display = 'none';
-                overlay.style.display = 'flex';
-
-                // Update controls
-                document.querySelector('.camera-btn.capture').style.display = 'none';
-                document.querySelector('.camera-btn.stop').style.display = 'inline-block';
-                document.querySelectorAll('.camera-btn')[2].style.display = 'inline-block';
-
-                this.showNotification('📷 Camera activated! Point at plants or QR codes for analysis', 'success');
-
-                // Start continuous scanning
-                this.startContinuousScanning();
-
-            } catch (error) {
-                console.error('Camera access error:', error);
-                this.showNotification('❌ Camera access denied. Please enable camera permissions.', 'error');
-            }
-        }
-
-        stopCamera() {
-            if (this.cameraStream) {
-                this.cameraStream.getTracks().forEach(track => track.stop());
-                this.cameraStream = null;
-            }
-
-            const video = document.getElementById('cameraVideo');
-            const placeholder = document.getElementById('cameraPlaceholder');
-            const overlay = document.getElementById('scanningOverlay');
-
-            video.style.display = 'none';
-            placeholder.style.display = 'flex';
-            overlay.style.display = 'none';
-
-            // Reset controls
-            document.querySelector('.camera-btn.capture').style.display = 'inline-block';
-            document.querySelector('.camera-btn.stop').style.display = 'none';
-            document.querySelectorAll('.camera-btn')[2].style.display = 'none';
-
-            this.showNotification('🛑 Camera stopped', 'info');
-        }
-
-        startContinuousScanning() {
-            // Simulate continuous AR scanning
-            setInterval(() => {
-                if (this.cameraStream && Math.random() > 0.85) {
-                    this.performARScan();
-                }
-            }, 2000);
-        }
-
-        performARScan() {
-            const scanResults = document.getElementById('scanResults');
-            const scanData = document.getElementById('scanData');
-
-            const mockResults = [
-                {
-                    type: 'Plant Species',
-                    name: 'Rhizophora mangle (Red Mangrove)',
-                    confidence: 92.4,
-                    health: 'Excellent',
-                    growth: '+23% above average'
-                },
-                {
-                    type: 'Environmental Data',
-                    name: 'Site Conditions',
-                    temperature: '28°C',
-                    humidity: '82%',
-                    soilPH: '7.8',
-                    salinity: '32 PSU'
-                },
-                {
-                    type: 'QR Code',
-                    name: 'Site Marker A127-03',
-                    location: 'Sundarbans Delta',
-                    status: 'Active Monitoring',
-                    lastUpdate: '2 hours ago'
-                }
-            ];
-
-            const randomResult = mockResults[Math.floor(Math.random() * mockResults.length)];
-
-            if (randomResult.type === 'Plant Species') {
-                scanData.innerHTML = `
-                <div class="d-flex align-items-center mb-2">
-                    <i class="fas fa-seedling me-2 text-success"></i>
-                    <strong>${randomResult.name}</strong>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <small>Confidence: <strong>${randomResult.confidence}%</strong></small>
-                    </div>
-                    <div class="col-6">
-                        <small>Health: <strong class="text-success">${randomResult.health}</strong></small>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <small>Growth Rate: <strong class="text-primary">${randomResult.growth}</strong></small>
-                </div>
-            `;
-            } else if (randomResult.type === 'Environmental Data') {
-                scanData.innerHTML = `
-                <div class="d-flex align-items-center mb-2">
-                    <i class="fas fa-thermometer-half me-2 text-info"></i>
-                    <strong>${randomResult.name}</strong>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <small>Temperature: <strong>${randomResult.temperature}</strong></small><br>
-                        <small>Humidity: <strong>${randomResult.humidity}</strong></small>
-                    </div>
-                    <div class="col-6">
-                        <small>pH Level: <strong>${randomResult.soilPH}</strong></small><br>
-                        <small>Salinity: <strong>${randomResult.salinity}</strong></small>
-                    </div>
-                </div>
-            `;
-            } else {
-                scanData.innerHTML = `
-                <div class="d-flex align-items-center mb-2">
-                    <i class="fas fa-qrcode me-2 text-primary"></i>
-                    <strong>${randomResult.name}</strong>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <small>Location: <strong>${randomResult.location}</strong></small>
-                    </div>
-                    <div class="col-6">
-                        <small>Status: <strong class="text-success">${randomResult.status}</strong></small>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <small>Last Update: <strong>${randomResult.lastUpdate}</strong></small>
-                </div>
-            `;
-            }
-
-            scanResults.style.display = 'block';
-
+    <script>
+        // Auto-verification function
+        function autoVerify(siteId) {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+            button.disabled = true;
+            
+            // Simulate AI verification process
             setTimeout(() => {
-                scanResults.style.display = 'none';
-            }, 5000);
-        }
-
-        captureFrame() {
-            if (this.cameraStream) {
-                const video = document.getElementById('cameraVideo');
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                ctx.drawImage(video, 0, 0);
-
-                // Convert to blob and analyze
-                canvas.toBlob(blob => {
-                    this.analyzeImage(blob);
-                }, 'image/jpeg', 0.9);
-
-                this.showNotification('📸 Frame captured and analyzing...', 'info');
-            }
-        }
-
-        // File Upload Functions
-        handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file && file.type.startsWith('image/')) {
-                this.displayImagePreview(file);
-            }
-        }
-
-        handleFileDrop(event) {
-            event.preventDefault();
-            const uploadZone = document.getElementById('fileUploadZone');
-            uploadZone.classList.remove('dragover');
-
-            const file = event.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) {
-                this.displayImagePreview(file);
-            }
-        }
-
-        handleDragOver(event) {
-            event.preventDefault();
-        }
-
-        handleDragEnter(event) {
-            event.preventDefault();
-            document.getElementById('fileUploadZone').classList.add('dragover');
-        }
-
-        handleDragLeave(event) {
-            event.preventDefault();
-            document.getElementById('fileUploadZone').classList.remove('dragover');
-        }
-
-        displayImagePreview(file) {
-            const preview = document.getElementById('filePreview');
-            const previewImage = document.getElementById('previewImage');
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                previewImage.src = e.target.result;
-                preview.classList.add('show');
-            };
-            reader.readAsDataURL(file);
-
-            this.currentImageFile = file;
-        }
-
-        async analyzeSpecies() {
-            if (!this.currentImageFile) return;
-
-            this.showNotification('🧠 AI analyzing species...', 'info');
-
-            try {
-                let analysisResult;
-
-                if (this.model) {
-                    // Use TensorFlow.js for real analysis
-                    analysisResult = await this.performTensorFlowAnalysis(this.currentImageFile);
-                } else {
-                    // Use mock analysis
-                    analysisResult = await this.performMockAnalysis();
-                }
-
-                this.displaySpeciesResults(analysisResult);
-
-            } catch (error) {
-                console.error('Analysis error:', error);
-                this.showNotification('❌ Analysis failed. Please try again.', 'error');
-            }
-        }
-
-        async performTensorFlowAnalysis(imageFile) {
-            // Preprocess image for TensorFlow
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(imageFile);
-
-            return new Promise((resolve) => {
-                img.onload = async () => {
-                    const tensor = tf.browser.fromPixels(img)
-                        .resizeNearestNeighbor([224, 224])
-                        .toFloat()
-                        .div(255.0)
-                        .expandDims(0);
-
-                    const prediction = await this.model.predict(tensor).data();
-                    const maxIndex = prediction.indexOf(Math.max(...prediction));
-                    const confidence = Math.max(...prediction) * 100;
-
-                    // Mock species mapping for demo
-                    const species = [
-                        'Rhizophora mangle (Red Mangrove)',
-                        'Avicennia marina (Grey Mangrove)',
-                        'Zostera marina (Eelgrass)',
-                        'Spartina alterniflora (Smooth Cordgrass)',
-                        'Salicornia europaea (Glasswort)'
-                    ];
-
-                    resolve({
-                        species: species[maxIndex % species.length],
-                        confidence: Math.min(confidence, 98.5),
-                        ecosystem: 'Coastal Wetland',
-                        carbonRate: (Math.random() * 2 + 1).toFixed(1),
-                        healthScore: Math.floor(Math.random() * 20 + 80)
-                    });
-
-                    tensor.dispose();
-                };
-            });
-        }
-
-        async performMockAnalysis() {
-            // Simulate processing time
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            const species = [
-                'Rhizophora mangle (Red Mangrove)',
-                'Avicennia marina (Grey Mangrove)',
-                'Bruguiera gymnorrhiza (Large-leafed Mangrove)',
-                'Zostera marina (Eelgrass)',
-                'Spartina alterniflora (Smooth Cordgrass)',
-                'Salicornia europaea (Glasswort)',
-                'Thalassia testudinum (Turtle Grass)'
-            ];
-
-            return {
-                species: species[Math.floor(Math.random() * species.length)],
-                confidence: Math.floor(Math.random() * 15 + 85),
-                ecosystem: ['Mangrove Forest', 'Seagrass Meadow', 'Salt Marsh'][Math.floor(Math.random() * 3)],
-                carbonRate: (Math.random() * 2 + 1).toFixed(1),
-                healthScore: Math.floor(Math.random() * 20 + 80),
-                threats: ['None detected', 'Minor salt stress', 'Optimal conditions'][Math.floor(Math.random() * 3)],
-                recommendations: [
-                    'Continue current care protocol',
-                    'Increase monitoring frequency',
-                    'Consider companion planting',
-                    'Optimize irrigation schedule'
-                ]
-            };
-        }
-
-        displaySpeciesResults(result) {
-            const resultsDiv = document.getElementById('speciesResults');
-            const speciesData = document.getElementById('speciesData');
-
-            speciesData.innerHTML = `
-            <div class="species-result">
-                <div class="species-icon">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <div class="species-info">
-                    <h5>${result.species}</h5>
-                    <p class="mb-2">Ecosystem: <strong>${result.ecosystem}</strong></p>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: ${result.confidence}%"></div>
-                    </div>
-                    <small>Confidence: ${result.confidence.toFixed(1)}%</small>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h6>Carbon Sequestration</h6>
-                            <h4 class="text-success">${result.carbonRate}t CO₂/ha/yr</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h6>Health Score</h6>
-                            <h4 class="text-${result.healthScore > 90 ? 'success' : result.healthScore > 70 ? 'warning' : 'danger'}">${result.healthScore}/100</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            ${result.threats ? `
-                <div class="alert alert-info-custom mt-3">
-                    <h6><i class="fas fa-shield-alt me-2"></i>Health Assessment</h6>
-                    <p class="mb-0">Status: <strong>${result.threats}</strong></p>
-                </div>
-            ` : ''}
-
-            ${result.recommendations ? `
-                <div class="alert alert-success-custom mt-3">
-                    <h6><i class="fas fa-lightbulb me-2"></i>AI Recommendations</h6>
-                    <ul class="mb-0">
-                        ${result.recommendations.map(rec => `<li>${rec}</li>`).join('')}
-                    </ul>
-                </div>
-            ` : ''}
-        `;
-
-            resultsDiv.style.display = 'block';
-            this.showNotification('✅ Species analysis complete!', 'success');
-        }
-
-        analyzeImage(blob) {
-            // Convert blob to file and analyze
-            const file = new File([blob], 'capture.jpg', { type: 'image/jpeg' });
-            this.currentImageFile = file;
-            this.analyzeSpecies();
-        }
-
-        // Cara Functions
-        toggleCaraChat() {
-            const caraChat = document.getElementById('caraChat');
-            const caraButton = document.querySelector('.cara-button');
-
-            if (this.caraOpen) {
-                caraChat.classList.remove('show');
-                caraButton.innerHTML = '<i class="fas fa-robot"></i>';
-                this.caraOpen = false;
-            } else {
-                caraChat.classList.add('show');
-                caraButton.innerHTML = '<i class="fas fa-times"></i>';
-                this.caraOpen = true;
-
+                button.innerHTML = '<i class="fas fa-check-circle"></i> Verified';
+                button.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                
+                // Add to real-time feed
+                addFeedLine(`[${new Date().toLocaleTimeString()}] AI_MRV > Site ${siteId} automatically verified and credits issued`);
+                
                 setTimeout(() => {
-                    document.getElementById('caraInput').focus();
-                }, 300);
+                    button.style.display = 'none';
+                    const parentItem = button.closest('.verification-item');
+                    parentItem.style.opacity = '0.5';
+                    parentItem.style.transform = 'translateX(10px)';
+                }, 1000);
+            }, 3000);
+        }
+
+        // Real-time feed simulation
+        function addFeedLine(text) {
+            const feed = document.querySelector('.real-time-feed');
+            const newLine = document.createElement('div');
+            newLine.className = 'feed-line';
+            newLine.textContent = text;
+            feed.appendChild(newLine);
+            feed.scrollTop = feed.scrollHeight;
+            
+            // Remove old lines to prevent overflow
+            const lines = feed.querySelectorAll('.feed-line');
+            if (lines.length > 15) {
+                lines[0].remove();
             }
         }
 
-        sendCaraMessage() {
-            const input = document.getElementById('caraInput');
-            const message = input.value.trim();
-
-            if (!message) return;
-
-            this.addCaraMessage(message, 'user');
-            input.value = '';
-
-            // Show typing indicator
-            setTimeout(() => {
-                const response = this.processCaraMessage(message);
-                this.addCaraMessage(response, 'cara');
-            }, 1000 + Math.random() * 1500);
-        }
-
-        processCaraMessage(message) {
-            const lowerMessage = message.toLowerCase();
-            this.conversationContext.push(message);
-
-            // Enhanced context analysis
-            for (const category in this.aiResponses) {
-                const categoryData = this.aiResponses[category];
-                for (const keyword of categoryData.keywords) {
-                    if (lowerMessage.includes(keyword)) {
-                        return this.getRandomResponse(category);
-                    }
-                }
-            }
-
-            return this.getRandomResponse('general');
-        }
-
-        getRandomResponse(category) {
-            const responses = this.aiResponses[category]?.responses || this.aiResponses.general.responses;
-            return responses[Math.floor(Math.random() * responses.length)];
-        }
-
-        addCaraMessage(content, sender) {
-            const messagesContainer = document.getElementById('caraMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `cara-message ${sender}`;
-
-            const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-            // Format content with markdown-like syntax
-            const formattedContent = content
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n/g, '<br>');
-
-            messageDiv.innerHTML = `
-            <div class="cara-message-avatar">${sender === 'cara' ? '🤖' : 'JD'}</div>
-            <div class="cara-message-content">
-                <div>${formattedContent}</div>
-                <div class="cara-message-time">${time}</div>
-            </div>
-        `;
-
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        showNotification(message, type = 'info') {
-            const alertClass = type === 'success' ? 'alert-success' :
-                type === 'warning' ? 'alert-warning' :
-                    type === 'error' ? 'alert-danger' : 'alert-info';
-
-            const notification = document.createElement('div');
-            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed animate-fade-in`;
-            notification.style.cssText = 'top: 120px; right: 20px; z-index: 9999; min-width: 300px; max-width: 400px; border-radius: 12px;';
-            notification.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        `;
-
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.classList.add('fade');
-                    setTimeout(() => {
-                        if (notification.parentNode) {
-                            notification.parentNode.removeChild(notification);
-                        }
-                    }, 300);
-                }
+        // Simulate continuous AI processing
+        function simulateAIProcessing() {
+            const activities = [
+                'Processing satellite imagery for vegetation analysis...',
+                'Drone data integration from coastal sites...',
+                'Running carbon sequestration calculations...',
+                'Updating blockchain registry with new measurements...',
+                'AI model predicting growth patterns...',
+                'Verifying restoration progress automatically...',
+                'Climate risk assessment in progress...',
+                'Smart contract execution for credit generation...'
+            ];
+            
+            setInterval(() => {
+                const activity = activities[Math.floor(Math.random() * activities.length)];
+                const timestamp = new Date().toLocaleTimeString();
+                addFeedLine(`[${timestamp}] AI_MRV > ${activity}`);
             }, 5000);
         }
-    }
 
-    // Global Functions
-    const app = new BlueCarbonAdvancedApp();
-
-    // Login Functions
-    function handleLogin(event) {
-        event.preventDefault();
-
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        const loginBtn = event.target.querySelector('.btn-login');
-
-        if (!email || !password) {
-            app.showNotification('Please fill in all fields', 'error');
-            return;
+        // Update metrics dynamically
+        function updateMetrics() {
+            const metrics = document.querySelectorAll('.metric-value');
+            metrics.forEach(metric => {
+                const currentValue = parseFloat(metric.textContent);
+                if (!isNaN(currentValue)) {
+                    const variation = (Math.random() - 0.5) * 2; // ±1% variation
+                    const newValue = Math.max(0, currentValue + variation);
+                    metric.textContent = metric.textContent.includes('%') ? 
+                        Math.round(newValue) + '%' : 
+                        Math.round(newValue).toLocaleString();
+                }
+            });
         }
 
-        // Show loading
-        const originalText = loginBtn.innerHTML;
-        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing In...';
-        loginBtn.disabled = true;
-
-        // Simulate authentication
-        setTimeout(() => {
-            localStorage.setItem('blueCarbon_loggedIn', 'true');
-            localStorage.setItem('blueCarbon_user', JSON.stringify({
-                name: 'John Doe',
-                email: email,
-                level: 'Carbon Steward Level 3'
-            }));
-
-            app.showApp();
-
-            loginBtn.innerHTML = originalText;
-            loginBtn.disabled = false;
-        }, 2000);
-    }
-
-    function socialLogin(provider) {
-        app.showNotification(`🔗 ${provider.charAt(0).toUpperCase() + provider.slice(1)} login initiated...`, 'info');
-
-        setTimeout(() => {
-            localStorage.setItem('blueCarbon_loggedIn', 'true');
-            localStorage.setItem('blueCarbon_user', JSON.stringify({
-                name: 'John Doe',
-                email: 'john.doe@example.com',
-                level: 'Carbon Steward Level 3',
-                provider: provider
-            }));
-
-            app.showApp();
-            app.showNotification(`✅ Successfully logged in with ${provider}!`, 'success');
-        }, 1500);
-    }
-
-    function logout() {
-        localStorage.removeItem('blueCarbon_loggedIn');
-        localStorage.removeItem('blueCarbon_user');
-        app.showLogin();
-        app.showNotification('👋 Logged out successfully', 'info');
-    }
-
-    // Navigation Functions
-    function showSection(sectionName) {
-        document.querySelectorAll('.content-section').forEach(section => {
-            section.style.display = 'none';
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            simulateAIProcessing();
+            
+            // Update metrics every 30 seconds
+            setInterval(updateMetrics, 30000);
+            
+            // Add some initial activity
+            setTimeout(() => {
+                addFeedLine('[' + new Date().toLocaleTimeString() + '] AI_MRV > System initialized - Autonomous MRV active');
+            }, 2000);
         });
-
-        document.getElementById(sectionName + '-section').style.display = 'block';
-
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-        });
-
-        document.querySelector(`a[onclick="showSection('${sectionName}')"]`).classList.add('active');
-
-        app.showNotification(`📱 Navigated to ${sectionName.charAt(0).toUpperCase() + sectionName.slice(1)}`, 'info');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Modal Functions
-    function openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Stop camera if AR scanner is closed
-        if (modalId === 'arScannerModal' && app.cameraStream) {
-            app.stopCamera();
-        }
-    }
-
-    function closeModalOnOverlay(event, modalId) {
-        if (event.target.classList.contains('modal-overlay')) {
-            closeModal(modalId);
-        }
-    }
-
-    // Feature Functions
-    function openAddSiteModal() { openModal('addSiteModal'); }
-    function openDroneSurveyModal() { openModal('droneSurveyModal'); }
-    function openARScanner() { openModal('arScannerModal'); }
-    function openSpeciesModal() { openModal('speciesModal'); }
-
-    // Camera Functions
-    function startCamera() { app.startCamera(); }
-    function stopCamera() { app.stopCamera(); }
-    function captureFrame() { app.captureFrame(); }
-
-    // File Upload Functions
-    function handleFileSelect(event) { app.handleFileSelect(event); }
-    function handleFileDrop(event) { app.handleFileDrop(event); }
-    function handleDragOver(event) { app.handleDragOver(event); }
-    function handleDragEnter(event) { app.handleDragEnter(event); }
-    function handleDragLeave(event) { app.handleDragLeave(event); }
-    function analyzeSpecies() { app.analyzeSpecies(); }
-
-    // Cara Functions
-    function toggleCaraChat() { app.toggleCaraChat(); }
-    function sendCaraMessage() { app.sendCaraMessage(); }
-    function useQuickPrompt(prompt) {
-        document.getElementById('caraInput').value = prompt;
-        app.sendCaraMessage();
-    }
-
-    // Action Functions
-    function addSiteSubmit() {
-        app.showNotification('🎉 Site added successfully! Monitoring systems activated.', 'success');
-        closeModal('addSiteModal');
-    }
-
-    function scheduleDrone() {
-        app.showNotification('🚁 Drone survey scheduled successfully!', 'success');
-        closeModal('droneSurveyModal');
-    }
-
-    // Content Functions
-    function openWeatherModal() {
-        openGenericModal(
-            '<i class="fas fa-cloud-sun me-2"></i>Weather AI Dashboard',
-            `<div>
-            <div style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <h2 style="margin: 0; font-weight: 800;">28°C</h2>
-                        <p style="margin: 0;">Optimal Conditions</p>
-                        <small>Perfect for mangrove growth</small>
-                    </div>
-                    <div class="col-4 text-end">
-                        <i class="fas fa-cloud-sun" style="font-size: 4rem;"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4 text-center">
-                    <h5>Humidity</h5>
-                    <h3 class="text-info">82%</h3>
-                </div>
-                <div class="col-4 text-center">
-                    <h5>Wind</h5>
-                    <h3 class="text-success">12 km/h</h3>
-                </div>
-                <div class="col-4 text-center">
-                    <h5>UV Index</h5>
-                    <h3 class="text-warning">6</h3>
-                </div>
-            </div>
-        </div>`
-        );
-    }
-
-    function openReportModal() {
-        openGenericModal(
-            '<i class="fas fa-file-chart-column me-2"></i>AI Report Generator',
-            `<div>
-            <h5>Generate Advanced Report</h5>
-            <div class="mb-3">
-                <label class="form-label">Report Type</label>
-                <select class="form-control">
-                    <option>Monthly Performance Report</option>
-                    <option>Carbon Credit Analysis</option>
-                    <option>Environmental Impact Summary</option>
-                    <option>ROI & Financial Analysis</option>
-                    <option>Comprehensive Dashboard</option>
-                </select>
-            </div>
-            <button class="btn btn-success-custom w-100" onclick="generateReport()">
-                <i class="fas fa-download me-2"></i>Generate & Download Report
-            </button>
-        </div>`
-        );
-    }
-
-    function generateReport() {
-        app.showNotification('📊 Report generation started... Download will begin shortly.', 'success');
-        closeModal('contentModal');
-    }
-
-    function openGenericModal(title, content) {
-        document.getElementById('modalTitle').innerHTML = title;
-        document.getElementById('modalBody').innerHTML = content;
-        openModal('contentModal');
-    }
-
-    function openMetricDetail(type) {
-        const details = {
-            credits: `<h5>💰 Carbon Credits Analysis</h5><p>Current: <strong>247 BCARB tokens</strong><br>Value: <strong>₹47,000</strong><br>Growth: <strong>+15 this month</strong><br>Performance: <strong>18% above market average</strong></p>`,
-            sites: `<h5>🗺️ Site Portfolio</h5><p>Active Sites: <strong>8</strong><br>Ecosystems: Mangrove (3), Seagrass (2), Salt Marsh (3)<br>Total Area: <strong>24.7 hectares</strong><br>Average Progress: <strong>76%</strong></p>`,
-            roi: `<h5>📈 ROI Performance</h5><p>Current ROI: <strong>15.2%</strong><br>Industry Average: <strong>11.8%</strong><br>Outperformance: <strong>+3.4%</strong><br>Projected 12-month: <strong>18-22%</strong></p>`,
-            co2: `<h5>🍃 Carbon Impact</h5><p>Total Captured: <strong>4.7 tons CO₂</strong><br>Monthly Rate: <strong>+0.8t</strong><br>Equivalent: <strong>1,024 cars removed</strong><br>Target Achievement: <strong>112%</strong></p>`
-        };
-        openGenericModal(`${type.charAt(0).toUpperCase() + type.slice(1)} Details`, details[type]);
-    }
-
-    function showUserProfile() {
-        openGenericModal(
-            '<i class="fas fa-user-circle me-2"></i>User Profile',
-            `<div class="text-center">
-            <div class="user-avatar" style="width: 100px; height: 100px; margin: 0 auto 1rem; font-size: 2.5rem;">JD</div>
-            <h4>John Doe</h4>
-            <p class="text-muted">Carbon Steward Level 3</p>
-            <div class="row mt-4">
-                <div class="col-6 text-center">
-                    <h5>247</h5>
-                    <small>Credits Earned</small>
-                </div>
-                <div class="col-6 text-center">
-                    <h5>8</h5>
-                    <small>Active Projects</small>
-                </div>
-            </div>
-        </div>`
-        );
-    }
-
-    function showSettings() {
-        app.showNotification('⚙️ Settings panel opened', 'info');
-    }
-
-    // Initialize on DOM load
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('✅ BlueCarbon Pro Advanced fully loaded - All systems operational!');
-    });
-</script>
+    </script>
+</body>
+</html>
